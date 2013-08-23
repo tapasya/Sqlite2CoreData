@@ -48,6 +48,7 @@
     [xmlDoc setStandalone:YES];
     
     for (SQCDTableInfo *tableInfo in tableInfos) {
+        NSLog(@"Generating xml for table '%@'",tableInfo.sqliteName);
         NSXMLElement* tableEntity = [tableInfo xmlRepresentation];
         [root addChild:tableEntity];
     }

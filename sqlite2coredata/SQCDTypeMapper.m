@@ -39,7 +39,12 @@
     if (bracketRange.location != NSNotFound) {
         sqlliteType = [sqlliteType substringToIndex:bracketRange.location];
     }
-    return [typesDict valueForKey:sqlliteType];
+    NSString* xcType = [typesDict valueForKey:sqlliteType];
+    if (xcType == nil) {
+        NSLog(@"WARNING: Using '%@' for sqllite type '%@'",XCUNDEFINED,sqlliteType);
+        xcType = XCUNDEFINED;
+    }
+    return xcType;
 }
 
 +(NSDictionary*)datatypeMap
