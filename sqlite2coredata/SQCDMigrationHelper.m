@@ -11,9 +11,15 @@
 #import "SQCDColumnInfo.h"
 #import "sqlite3.h"
 
+#define kXCDataModelDExtention   @"xcdatamodeld"
+#define kXCDataModelExtention    @"xcdatamodel"
+#define kXCDContents             @"contents"
+
 @implementation SQCDMigrationHelper
 
-+(void) generateCoreDataModelFromDBPath:(NSString *)dbPath outputDirectoryPath:(NSString*) outputPath
++(void) generateCoreDataModelFromDBPath:(NSString *)dbPath
+                    outputDirectoryPath:(NSString*) outputPath
+                               fileName:(NSString*) fileName
 {
     NSArray* tableNames = [SQCDMigrationHelper fetchTableNames:dbPath];
     NSMutableArray* tableInfos = [NSMutableArray arrayWithCapacity:tableNames.count];
@@ -51,12 +57,28 @@
     
     NSFileManager* fm = [NSFileManager defaultManager];
     
-    // TODO remove hardcoded filenames
-    BOOL isCreated = [fm createDirectoryAtPath:[outputPath stringByAppendingString:@"/migration.xcdatamodeld/"] withIntermediateDirectories:     YES attributes:nil error:nil] &&
-    [fm createDirectoryAtPath:[outputPath stringByAppendingString:@"/migration.xcdatamodeld/migration.xcdatamodel/"] withIntermediateDirectories:YES attributes:nil error:nil] &&
-    [fm createFileAtPath:[outputPath stringByAppendingString:@"/migration.xcdatamodeld/migration.xcdatamodel/contents"] contents:xmlData attributes:nil];
+    if ([fileName length] == 0) {
+        fileName = [[dbPath lastPathComponent] stringByDeletingPathExtension];
+    }
     
-    isCreated ? NSLog(@"Data model succesfully generated at %@ with name", outputPath): NSLog(@"Data model generation failed");
+    // TODO remove hardcoded filenames
+    NSString* xcdmdPath = [outputPath stringByAppendingFormat:@"/%@.%@/", fileName, kXCDataModelDExtention];
+    NSString* xcdmPath = [xcdmdPath stringByAppendingFormat:@"%@.%@/", fileName, kXCDataModelExtention];
+    NSString* contentsPath = [xcdmPath stringByAppendingString:kXCDContents];
+    
+    BOOL isCreated = [fm createDirectoryAtPath:xcdmdPath
+                   withIntermediateDirectories:YES
+                                    attributes:nil
+                                         error:nil] &&
+                    [fm createDirectoryAtPath:xcdmPath
+                  withIntermediateDirectories:YES
+                                   attributes:nil
+                                        error:nil] &&
+                    [fm createFileAtPath:contentsPath
+                                contents:xmlData
+                              attributes:nil];
+    
+    isCreated ? NSLog(@"Data model succesfully generated at %@ with name %@", outputPath, fileName): NSLog(@"Data model generation failed");
 }
 
 + (NSArray*) fetchTableNames:(NSString*) dbPath

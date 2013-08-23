@@ -21,11 +21,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "sqlite2coredata/SQCDMigrationHelper.m"
-         timestampString = "398885882.377828"
+         timestampString = "398947204.718263"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "157"
-         endingLineNumber = "157"
+         startingLineNumber = "172"
+         endingLineNumber = "172"
          landmarkName = "+allColumnsInTableNamed:dbPath:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -34,12 +34,12 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "sqlite2coredata/SQCDMigrationHelper.m"
-         timestampString = "398885920.154995"
+         timestampString = "398947204.718263"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "60"
-         endingLineNumber = "60"
-         landmarkName = "+generateCoreDataModelFromDBPath:outputDirectoryPath:"
+         startingLineNumber = "75"
+         endingLineNumber = "75"
+         landmarkName = "+generateCoreDataModelFromDBPath:outputDirectoryPath:fileName:"
          landmarkType = "5">
       </FileBreakpoint>
    </FileBreakpoints>

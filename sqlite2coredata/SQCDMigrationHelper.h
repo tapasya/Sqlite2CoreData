@@ -10,6 +10,7 @@
 
 @interface SQCDMigrationHelper : NSObject
 
-+ (void) generateCoreDataModelFromDBPath:(NSString*) dbPath outputDirectoryPath:(NSString*) outputPath;
-
++(void) generateCoreDataModelFromDBPath:(NSString *)dbPath
+                    outputDirectoryPath:(NSString*) outputPath
+                               fileName:(NSString*) fileName;
 @end

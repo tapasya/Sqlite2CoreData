@@ -12,7 +12,6 @@
 		842CD19517C4B24A000061FC /* sqlite2coredata.1 in CopyFiles */ = {isa = PBXBuildFile; fileRef = 842CD19417C4B24A000061FC /* sqlite2coredata.1 */; };
 		842CD19C17C4B284000061FC /* libsqlite3.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 842CD19B17C4B284000061FC /* libsqlite3.0.dylib */; };
 		842CD1B217C4B90B000061FC /* SQCDMigrationHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 842CD1B117C4B90B000061FC /* SQCDMigrationHelper.m */; };
-		842CD1B317C4BE9C000061FC /* CRMDatabase.db in CopyFiles */ = {isa = PBXBuildFile; fileRef = 842CD1AF17C4B8C9000061FC /* CRMDatabase.db */; };
 		8497B78E17C6439200682D8A /* SQCDTypeMapper.m in Sources */ = {isa = PBXBuildFile; fileRef = 8497B78A17C6439200682D8A /* SQCDTypeMapper.m */; };
 		8497B79117C663B300682D8A /* SQCDColumnInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 8497B79017C663B300682D8A /* SQCDColumnInfo.m */; };
 		8497B79417C66D9000682D8A /* SQCDTableInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 8497B79317C66D9000682D8A /* SQCDTableInfo.m */; };
@@ -25,7 +24,6 @@
 			dstPath = usr/share/man/man1;
 			dstSubfolderSpec = 7;
 			files = (
-				842CD1B317C4BE9C000061FC /* CRMDatabase.db in CopyFiles */,
 				842CD19517C4B24A000061FC /* sqlite2coredata.1 in CopyFiles */,
 			);
 			runOnlyForDeploymentPostprocessing = 1;
@@ -39,7 +37,6 @@
 		842CD19317C4B24A000061FC /* sqlite2coredata-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "sqlite2coredata-Prefix.pch"; sourceTree = "<group>"; };
 		842CD19417C4B24A000061FC /* sqlite2coredata.1 */ = {isa = PBXFileReference; lastKnownFileType = text.man; path = sqlite2coredata.1; sourceTree = "<group>"; };
 		842CD19B17C4B284000061FC /* libsqlite3.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.0.dylib; path = usr/lib/libsqlite3.0.dylib; sourceTree = SDKROOT; };
-		842CD1AF17C4B8C9000061FC /* CRMDatabase.db */ = {isa = PBXFileReference; lastKnownFileType = file; path = CRMDatabase.db; sourceTree = "<group>"; };
 		842CD1B017C4B90B000061FC /* SQCDMigrationHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SQCDMigrationHelper.h; sourceTree = "<group>"; };
 		842CD1B117C4B90B000061FC /* SQCDMigrationHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SQCDMigrationHelper.m; sourceTree = "<group>"; };
 		8497B78917C6439200682D8A /* sqcdtypemap.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = sqcdtypemap.plist; sourceTree = "<group>"; };
@@ -111,7 +108,6 @@
 		842CD19217C4B24A000061FC /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				842CD1AF17C4B8C9000061FC /* CRMDatabase.db */,
 				8497B78917C6439200682D8A /* sqcdtypemap.plist */,
 				842CD19317C4B24A000061FC /* sqlite2coredata-Prefix.pch */,
 			);
