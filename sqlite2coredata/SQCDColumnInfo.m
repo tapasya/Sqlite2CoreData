@@ -7,6 +7,7 @@
 //
 
 #import "SQCDColumnInfo.h"
+#import "SQCDTypeMapper.h"
 
 @implementation SQCDColumnInfo
 
@@ -15,8 +16,7 @@
     NSXMLElement* childAttr = (NSXMLElement*) [NSXMLNode elementWithName:@"attribute"];
     [childAttr addAttribute:[NSXMLNode attributeWithName:@"name" stringValue:[self nameForProperty]]];
     [childAttr addAttribute:[NSXMLNode attributeWithName:@"optional" stringValue:self.isNonNull ? @"NO":@"YES"]];
-    // TO DO use mapper to get the data mapping
-    [childAttr addAttribute:[NSXMLNode attributeWithName:@"attributeType" stringValue:@"String"]];
+    [childAttr addAttribute:[NSXMLNode attributeWithName:@"attributeType" stringValue:[SQCDTypeMapper xctypeFromType:self.sqlliteType]]];
     [childAttr addAttribute:[NSXMLNode attributeWithName:@"syncable" stringValue:@"YES"]];
     
     return childAttr;
