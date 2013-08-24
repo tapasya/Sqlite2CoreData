@@ -39,7 +39,6 @@
 		842CD19B17C4B284000061FC /* libsqlite3.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.0.dylib; path = usr/lib/libsqlite3.0.dylib; sourceTree = SDKROOT; };
 		842CD1B017C4B90B000061FC /* SQCDMigrationHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SQCDMigrationHelper.h; sourceTree = "<group>"; };
 		842CD1B117C4B90B000061FC /* SQCDMigrationHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SQCDMigrationHelper.m; sourceTree = "<group>"; };
-		8497B78917C6439200682D8A /* sqcdtypemap.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = sqcdtypemap.plist; sourceTree = "<group>"; };
 		8497B78A17C6439200682D8A /* SQCDTypeMapper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SQCDTypeMapper.m; sourceTree = "<group>"; };
 		8497B78B17C6439200682D8A /* SQCDTypeMapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SQCDTypeMapper.h; sourceTree = "<group>"; };
 		8497B78F17C663B300682D8A /* SQCDColumnInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SQCDColumnInfo.h; sourceTree = "<group>"; };
@@ -108,7 +107,6 @@
 		842CD19217C4B24A000061FC /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				8497B78917C6439200682D8A /* sqcdtypemap.plist */,
 				842CD19317C4B24A000061FC /* sqlite2coredata-Prefix.pch */,
 			);
 			name = "Supporting Files";

@@ -21,7 +21,7 @@ int main(int argc, const char * argv[])
         }
         
         NSString* dbPath = [[NSString stringWithUTF8String:argv[1]] stringByExpandingTildeInPath];
-        NSString* outputPath = [[NSString stringWithUTF8String:argv[2]] stringByExpandingTildeInPath];
+        NSString* outputPath = argc > 2 ? [[NSString stringWithUTF8String:argv[2]] stringByExpandingTildeInPath] : [dbPath stringByDeletingLastPathComponent];
         NSString* fileName = argc > 3 ? [[NSString stringWithUTF8String:argv[3]] stringByExpandingTildeInPath] : nil;
         
         [SQCDMigrationHelper generateCoreDataModelFromDBPath:dbPath

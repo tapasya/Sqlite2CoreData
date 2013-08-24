@@ -24,10 +24,10 @@
 
 - (NSString*) nameForProperty
 {
-    NSString* columnName = self.sqliteName;
+    NSString* columnName = [self.sqliteName lowercaseString];
     
     if ([[columnName lowercaseString] isEqualToString:@"id"]) {
-        columnName = [[self.sqliteTableName lowercaseString] stringByAppendingFormat:@"_%@", self.sqliteName];
+        columnName = [[self.sqliteTableName lowercaseString] stringByAppendingFormat:@"_primary_%@", self.sqliteName];
     }
     
     NSArray *components = [columnName componentsSeparatedByString:@"_"];
@@ -41,6 +41,7 @@
         }
     }
     
-    return [NSString stringWithString:output];}
+    return [NSString stringWithString:output];
+}
 
 @end

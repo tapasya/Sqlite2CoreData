@@ -112,7 +112,8 @@
         
         sqlite3_clear_bindings(statement);
         sqlite3_finalize(statement);
-        
+        sqlite3_close(_db);
+
         return selectedRecords;
     }
     
@@ -174,12 +175,14 @@
                     column.sqlliteType = [NSString stringWithCString:results[(i+1)*nColumns + typeColumnIndex] encoding:NSUTF8StringEncoding];
                     column.isNonNull = [[NSString stringWithCString:results[(i+1)*nColumns + nonnullColumnIndex] encoding:NSUTF8StringEncoding] boolValue];
                     column.sqliteTableName = tableName;
-                    // TO DO add non null and default value
+                    // TO DO default value reading
                     [columnNames addObject:column] ;
                 }
             }
         }
         sqlite3_free_table(results) ;
+        
+        sqlite3_close(_db);
     
         NSArray* output = nil ;
         if (columnNames != nil) {
