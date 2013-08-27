@@ -14,6 +14,8 @@
 @property (nonatomic, strong) NSString* toSqliteTableName;
 @property (nonatomic, strong) NSString* fromSqliteColumnName;
 @property (nonatomic, strong) NSString* toSqliteColumnName;
+@property (nonatomic, assign) BOOL toMany;
 
+-(NSXMLElement*) xmlRepresentation;
 
 @end
