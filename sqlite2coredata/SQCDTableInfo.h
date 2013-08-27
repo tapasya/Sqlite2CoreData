@@ -14,6 +14,10 @@
 
 @property (nonatomic, strong) NSString* sqliteName;
 
+@property (nonatomic, strong) NSString* sqlStatement;
+
+@property (nonatomic, strong) NSArray* foreignKeys;
+
 -(NSXMLElement*) xmlRepresentation;
 
 @end
