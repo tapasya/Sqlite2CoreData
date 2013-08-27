@@ -15,6 +15,6 @@
 
 @interface SQCDDatabaseHelper : NSObject
 
-+ (NSArray*) fetchTableInfos:(NSString*) dbPath;
++ (NSDictionary*) fetchTableInfos:(NSString*) dbPath;
 
 @end

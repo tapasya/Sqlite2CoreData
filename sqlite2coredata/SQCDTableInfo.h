@@ -10,13 +10,13 @@
 
 @interface SQCDTableInfo : NSObject
 
-@property (nonatomic, strong) NSArray* columns;
+@property (nonatomic, strong) NSDictionary* columns;
 
 @property (nonatomic, strong) NSString* sqliteName;
 
 @property (nonatomic, strong) NSString* sqlStatement;
 
-@property (nonatomic, strong) NSArray* foreignKeys;
+@property (nonatomic, strong) NSDictionary* foreignKeys;
 
 -(NSXMLElement*) xmlRepresentation;
 

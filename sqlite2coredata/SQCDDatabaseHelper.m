@@ -10,7 +10,7 @@
 
 @implementation SQCDDatabaseHelper
 
-+ (NSArray*) fetchTableInfos:(NSString*) dbPath
++ (NSDictionary*) fetchTableInfos:(NSString*) dbPath
 {
     sqlite3*            _db;
     
@@ -27,7 +27,7 @@
                                         &statement,
                                         NULL);
         
-        NSMutableArray *tableInfos = [NSMutableArray array];
+        NSMutableDictionary *tableInfos = [NSMutableDictionary dictionary];
         if ( retVal == SQLITE_OK )
         {
             while(sqlite3_step(statement) == SQLITE_ROW )
@@ -44,7 +44,7 @@
                 
                 tableInfo.foreignKeys = [SQCDDatabaseHelper allForeignKeysInTableNamed:tableInfo.sqliteName inDatabase:_db];
                 
-                [tableInfos addObject:tableInfo];
+                [tableInfos setValue:tableInfo forKey:tableName];
             }
         }
         
@@ -59,7 +59,7 @@
     
 }
 
-+ (NSArray*) allForeignKeysInTableNamed:(NSString*)tableName inDatabase:(sqlite3*) db
++ (NSDictionary*) allForeignKeysInTableNamed:(NSString*)tableName inDatabase:(sqlite3*) db
 {
     sqlite3_stmt* statement;
     NSString *query = [[NSString alloc] initWithFormat:@"pragma foreign_key_list(%@)", tableName];
@@ -69,7 +69,7 @@
                                     &statement,
                                     NULL);
     
-    NSMutableArray *tableInfos = [NSMutableArray array];
+    NSMutableDictionary *foreignKeyInfos = [NSMutableArray array];
     if ( retVal == SQLITE_OK )
     {
         while(sqlite3_step(statement) == SQLITE_ROW )
@@ -88,18 +88,18 @@
             fkInfo.fromSqliteColumnName = fromColName;
             fkInfo.toSqliteColumnName = toColName;
             
-            [tableInfos addObject:fkInfo];
+            [foreignKeyInfos setValue:fkInfo forKey:fkInfo.fromSqliteColumnName];
         }
     }
     
     sqlite3_clear_bindings(statement);
     sqlite3_finalize(statement);
     
-    return tableInfos;
+    return foreignKeyInfos;
 
 }
 
-+ (NSArray*) allColumnsInTableNamed:(NSString*)tableName dbPath:(NSString*) dbPath
++ (NSDictionary*) allColumnsInTableNamed:(NSString*)tableName dbPath:(NSString*) dbPath
 {
     // Will return nil if fails, empty array if no columns
     
@@ -124,7 +124,7 @@
                                    ) ;
         
         
-        NSMutableArray* columnNames = nil ;
+        NSDictionary* columnInfos = nil ;
         if (!(result == SQLITE_OK)) {
             // Invoke the error handler for this class
             //        [self showError:errMsg from:16 code:result] ;
@@ -146,7 +146,7 @@
             
             if (nameColumnIndex<nColumns && typeColumnIndex < nColumns) {
                 int i ;
-                columnNames = [[NSMutableArray alloc] init] ;
+                columnInfos = [[NSMutableDictionary alloc] init] ;
                 for (i=0; i<nRows; i++) {
                     SQCDColumnInfo* column = [[SQCDColumnInfo alloc] init];
                     column.sqliteName = [NSString stringWithCString:results[(i+1)*nColumns + nameColumnIndex] encoding:NSUTF8StringEncoding];
@@ -154,7 +154,7 @@
                     column.isNonNull = [[NSString stringWithCString:results[(i+1)*nColumns + nonnullColumnIndex] encoding:NSUTF8StringEncoding] boolValue];
                     column.sqliteTableName = tableName;
                     // TO DO default value reading
-                    [columnNames addObject:column] ;
+                    [columnInfos setValue:column forKey:column.sqliteName] ;
                 }
             }
         }
@@ -162,9 +162,9 @@
         
         sqlite3_close(_db);
         
-        NSArray* output = nil ;
-        if (columnNames != nil) {
-            output = [columnNames copy] ;
+        NSDictionary* output = nil ;
+        if (columnInfos != nil) {
+            output = [columnInfos copy] ;
         }
         
         return output ;

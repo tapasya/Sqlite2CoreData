@@ -18,9 +18,7 @@
 +(void) generateCoreDataModelFromDBPath:(NSString *)dbPath
                     outputDirectoryPath:(NSString*) outputPath
                                fileName:(NSString*) fileName
-{
-    NSArray* tableInfos = [SQCDDatabaseHelper fetchTableInfos:dbPath];
-        
+{        
     // Create root node
     NSXMLElement *root =(NSXMLElement *)[NSXMLNode elementWithName:@"model"];
     [root addAttribute:[NSXMLNode attributeWithName:@"name" stringValue:@""]];
@@ -38,7 +36,9 @@
     [xmlDoc setCharacterEncoding:@"UTF-8"];
     [xmlDoc setStandalone:YES];
     
-    for (SQCDTableInfo *tableInfo in tableInfos) {
+    NSDictionary* tableInfos = [SQCDDatabaseHelper fetchTableInfos:dbPath];
+
+    for (SQCDTableInfo *tableInfo in [tableInfos allValues]) {
         NSLog(@"Generating xml for table '%@'",tableInfo.sqliteName);
         NSXMLElement* tableEntity = [tableInfo xmlRepresentation];
         [root addChild:tableEntity];
@@ -53,7 +53,6 @@
         fileName = [[dbPath lastPathComponent] stringByDeletingPathExtension];
     }
     
-    // TODO remove hardcoded filenames
     NSString* xcdmdPath = [outputPath stringByAppendingFormat:@"/%@.%@/", fileName, kXCDataModelDExtention];
     NSString* xcdmPath = [xcdmdPath stringByAppendingFormat:@"%@.%@/", fileName, kXCDataModelExtention];
     NSString* contentsPath = [xcdmPath stringByAppendingString:kXCDContents];
