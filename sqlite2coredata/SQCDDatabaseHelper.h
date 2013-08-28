@@ -17,4 +17,6 @@
 
 + (NSDictionary*) fetchTableInfos:(NSString*) dbPath;
 
++(NSMutableDictionary*) inverseRelationships;
+
 @end

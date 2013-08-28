@@ -9,6 +9,7 @@
 #import "SQCDTableInfo.h"
 #import "SQCDColumnInfo.h"
 #import "SQCDForeignKeyInfo.h"
+#import "SQCDDatabaseHelper.h"
 
 @implementation SQCDTableInfo
 
@@ -22,21 +23,26 @@
     [entity addAttribute:[NSXMLNode attributeWithName:@"syncable" stringValue:@"YES"]];
     
     for (SQCDColumnInfo* colunmInfo in [self.columns allValues]) {
-        BOOL isForeignKey = NO;
-        for (SQCDForeignKeyInfo* foreignKeys in self.foreignKeys) {
-            isForeignKey = [foreignKeys.fromSqliteColumnName isEqualToString:colunmInfo.sqliteName];
-        }
-        if (isForeignKey) {
+        SQCDForeignKeyInfo* foreignKeyInfo = [self.foreignKeys valueForKey:colunmInfo.sqliteName];
+        
+        if (foreignKeyInfo != nil) {
             // TODO handle relationships based on foreign keys.
             // Unique foreign key represents one to one on both sides
             // Non unique foreign key represents one to many on one side and one to one on other side
             // Need to findout about the many to many scenario
             // Should figure out a way to handle inverse relationship
-            
+            [entity addChild:[foreignKeyInfo xmlRepresentation]];
             
         } else{
             [entity addChild:[colunmInfo xmlRepresentation]];
         }
+    }
+    
+    NSMutableArray* inverseRelationForTable = [[SQCDDatabaseHelper inverseRelationships] valueForKey:self.sqliteName];
+    
+    for (SQCDForeignKeyInfo* inverseInfo in inverseRelationForTable) {
+        [entity addChild:[inverseInfo xmlRepresentation]];
+
     }
     
     return entity;

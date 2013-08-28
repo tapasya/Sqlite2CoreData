@@ -44,6 +44,11 @@
                 
                 tableInfo.foreignKeys = [SQCDDatabaseHelper allForeignKeysInTableNamed:tableInfo.sqliteName inDatabase:_db];
                 
+                // Adding inverse relation to the destination table using foreighKeys
+                for (SQCDForeignKeyInfo* foreignKeyInfo in [tableInfo.foreignKeys allValues]) {
+                    [SQCDDatabaseHelper addInverseRelation:foreignKeyInfo];
+                }
+                
                 [tableInfos setValue:tableInfo forKey:tableName];
             }
         }
@@ -69,7 +74,7 @@
                                     &statement,
                                     NULL);
     
-    NSMutableDictionary *foreignKeyInfos = [NSMutableArray array];
+    NSMutableDictionary *foreignKeyInfos = [NSMutableDictionary dictionary];
     if ( retVal == SQLITE_OK )
     {
         while(sqlite3_step(statement) == SQLITE_ROW )
@@ -101,7 +106,7 @@
 
 + (NSDictionary*) allColumnsInTableNamed:(NSString*)tableName dbPath:(NSString*) dbPath
 {
-    // Will return nil if fails, empty array if no columns
+    // Will return nil if fails, empty dict if no columns
     
     sqlite3*            _db;
     
@@ -171,6 +176,35 @@
     }
     
     return nil;
+}
+
++ (void) addInverseRelation:(SQCDForeignKeyInfo*) foreignKeyInfo
+{
+    NSMutableArray* inverseRelationForTable = [[SQCDDatabaseHelper inverseRelationships] valueForKey:foreignKeyInfo.toSqliteTableName];
+    if (nil == inverseRelationForTable) {
+        inverseRelationForTable = [NSMutableArray array];
+    }
+    
+    SQCDForeignKeyInfo* inverseInfo = [foreignKeyInfo copy];
+    inverseInfo.isInverse = YES;
+    
+    [inverseRelationForTable addObject:inverseInfo];
+    
+    [[SQCDDatabaseHelper inverseRelationships] setValue:inverseRelationForTable forKey:foreignKeyInfo.toSqliteTableName];
+}
+
++(NSMutableDictionary*) inverseRelationships
+{
+    static dispatch_once_t pred;
+    static NSMutableDictionary* inverseDict = nil;
+    dispatch_once(&pred, ^{
+        inverseDict = [NSMutableDictionary dictionary];
+        if (inverseDict == nil) {
+            NSLog(@"Could not initialize inverse dictionary");
+        }
+    });
+    
+    return inverseDict;
 }
 
 @end

@@ -15,6 +15,7 @@
 @property (nonatomic, strong) NSString* fromSqliteColumnName;
 @property (nonatomic, strong) NSString* toSqliteColumnName;
 @property (nonatomic, assign) BOOL toMany;
+@property (nonatomic, assign) BOOL isInverse;
 
 -(NSXMLElement*) xmlRepresentation;
 
