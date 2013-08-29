@@ -12,8 +12,11 @@
 int main(int argc, const char * argv[])
 {
 
+    if (argc < 2) {
+        NSLog(@"USAGE: sqlite2coredata <dbpath> [<output-directory> [<output-filename>]]");
+        return -1;
+    }
     @autoreleasepool {
-        
         for (int i=0; i<argc; i++)
         {
             NSString *str = [NSString stringWithUTF8String:argv[i]];
