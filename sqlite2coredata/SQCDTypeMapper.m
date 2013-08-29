@@ -82,6 +82,7 @@
     [map setValue:XCDOUBLE forKey:@"DOUBLE PRECISION"];
     [map setValue:XCFLOAT forKey:@"FLOAT"];
     [map setValue:XCDECIMAL forKey:@"DECIMAL"];
+    [map setValue:XCDECIMAL forKey:@"NUMERIC"];
     
     //Date
     [map setValue:XCDATE forKey:@"DATE"];
