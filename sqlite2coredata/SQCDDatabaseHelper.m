@@ -94,7 +94,7 @@
             fkInfo.fromSqliteColumnName = fromColName;
             fkInfo.toSqliteColumnName = toColName;
             fkInfo.toMany = NO;
-            [foreignKeyInfos setValue:fkInfo forKey:fkInfo.fromSqliteColumnName];
+            fkInfo.relationName = [[toTableName underscore] camelizeWithLowerFirstLetter];
             
             // Build inverse relationship object
             SQCDForeignKeyInfo* invFKInfo = [SQCDForeignKeyInfo new];
@@ -103,9 +103,17 @@
             invFKInfo.fromSqliteColumnName = fkInfo.toSqliteColumnName;
             invFKInfo.toSqliteColumnName = fkInfo.fromSqliteColumnName;
             invFKInfo.toMany = [uniqColumns containsObject:fkInfo.fromSqliteColumnName]==NO;
+            if (invFKInfo.toMany) {
+                invFKInfo.relationName = [[[invFKInfo.toSqliteTableName underscore] pluralize] camelizeWithLowerFirstLetter];
+            }else{
+                invFKInfo.relationName = [[invFKInfo.toSqliteTableName underscore] camelizeWithLowerFirstLetter];
+            }
+            fkInfo.invRelationName = invFKInfo.relationName;
+            invFKInfo.invRelationName = fkInfo.relationName;
             invFKInfo.isInverse = YES;
-            [SQCDDatabaseHelper addInverseRelation:invFKInfo];
             
+            [foreignKeyInfos setValue:fkInfo forKey:fkInfo.fromSqliteColumnName];
+            [SQCDDatabaseHelper addInverseRelation:invFKInfo];
         }
     }
     
@@ -148,9 +156,9 @@
             sqlite3_free(errMsg) ;
         }
         else {
-            int nameColumnIndex;
-            int typeColumnIndex;
-            int nonnullColumnIndex;
+            int nameColumnIndex = 0;
+            int typeColumnIndex = 0;
+            int nonnullColumnIndex = 0;
             for (int j=0; j<nColumns; j++) {
                 if (strcmp(results[j], "name") == 0) {
                     nameColumnIndex = j;

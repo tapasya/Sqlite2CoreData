@@ -17,6 +17,8 @@
 		8497B79417C66D9000682D8A /* SQCDTableInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 8497B79317C66D9000682D8A /* SQCDTableInfo.m */; };
 		84A47AAB17CBE6E6001EBD54 /* SQCDDatabaseHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 84A47AAA17CBE6E6001EBD54 /* SQCDDatabaseHelper.m */; };
 		84A47AAE17CBEA0C001EBD54 /* SQCDForeignKeyInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 84A47AAD17CBEA0C001EBD54 /* SQCDForeignKeyInfo.m */; };
+		88D2E02217CF476B00D170D6 /* RegexKitLite.m in Sources */ = {isa = PBXBuildFile; fileRef = 88D2E02017CF476B00D170D6 /* RegexKitLite.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		88D2E02517CF542E00D170D6 /* NSString+Inflections.m in Sources */ = {isa = PBXBuildFile; fileRef = 88D2E02417CF542E00D170D6 /* NSString+Inflections.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -51,6 +53,10 @@
 		84A47AAA17CBE6E6001EBD54 /* SQCDDatabaseHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SQCDDatabaseHelper.m; sourceTree = "<group>"; };
 		84A47AAC17CBEA0C001EBD54 /* SQCDForeignKeyInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SQCDForeignKeyInfo.h; sourceTree = "<group>"; };
 		84A47AAD17CBEA0C001EBD54 /* SQCDForeignKeyInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SQCDForeignKeyInfo.m; sourceTree = "<group>"; };
+		88D2E01F17CF476B00D170D6 /* RegexKitLite.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RegexKitLite.h; sourceTree = "<group>"; };
+		88D2E02017CF476B00D170D6 /* RegexKitLite.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RegexKitLite.m; sourceTree = "<group>"; };
+		88D2E02317CF542E00D170D6 /* NSString+Inflections.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+Inflections.h"; sourceTree = "<group>"; };
+		88D2E02417CF542E00D170D6 /* NSString+Inflections.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+Inflections.m"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -117,9 +123,21 @@
 		842CD19217C4B24A000061FC /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				88D2E01B17CF473F00D170D6 /* NSString+Inflections */,
 				842CD19317C4B24A000061FC /* sqlite2coredata-Prefix.pch */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		88D2E01B17CF473F00D170D6 /* NSString+Inflections */ = {
+			isa = PBXGroup;
+			children = (
+				88D2E02317CF542E00D170D6 /* NSString+Inflections.h */,
+				88D2E02417CF542E00D170D6 /* NSString+Inflections.m */,
+				88D2E01F17CF476B00D170D6 /* RegexKitLite.h */,
+				88D2E02017CF476B00D170D6 /* RegexKitLite.m */,
+			);
+			name = "NSString+Inflections";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -180,6 +198,8 @@
 				8497B79417C66D9000682D8A /* SQCDTableInfo.m in Sources */,
 				84A47AAB17CBE6E6001EBD54 /* SQCDDatabaseHelper.m in Sources */,
 				84A47AAE17CBEA0C001EBD54 /* SQCDForeignKeyInfo.m in Sources */,
+				88D2E02217CF476B00D170D6 /* RegexKitLite.m in Sources */,
+				88D2E02517CF542E00D170D6 /* NSString+Inflections.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -250,6 +270,8 @@
 			buildSettings = {
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "sqlite2coredata/sqlite2coredata-Prefix.pch";
+				MACOSX_DEPLOYMENT_TARGET = 10.8;
+				OTHER_LDFLAGS = "-licucore";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
@@ -259,6 +281,8 @@
 			buildSettings = {
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "sqlite2coredata/sqlite2coredata-Prefix.pch";
+				MACOSX_DEPLOYMENT_TARGET = 10.8;
+				OTHER_LDFLAGS = "-licucore";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;

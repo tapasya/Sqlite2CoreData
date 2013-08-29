@@ -14,6 +14,8 @@
 @property (nonatomic, strong) NSString* toSqliteTableName;
 @property (nonatomic, strong) NSString* fromSqliteColumnName;
 @property (nonatomic, strong) NSString* toSqliteColumnName;
+@property (nonatomic, strong) NSString* relationName;
+@property (nonatomic, strong) NSString* invRelationName;
 @property (nonatomic, assign) BOOL toMany;
 @property (nonatomic, assign) BOOL isInverse;
 

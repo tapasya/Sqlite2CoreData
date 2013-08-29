@@ -14,12 +14,12 @@
 {
     NSXMLElement* childAttr = (NSXMLElement*) [NSXMLNode elementWithName:@"relationship"];
     
-    [childAttr addAttribute:[NSXMLNode attributeWithName:@"name" stringValue:self.fromSqliteColumnName]];
+    [childAttr addAttribute:[NSXMLNode attributeWithName:@"name" stringValue:self.relationName]];
    
     [childAttr addAttribute:[NSXMLNode attributeWithName:@"destinationEntity" stringValue:[self.toSqliteTableName capitalizedString]]];
     
     
-    [childAttr addAttribute:[NSXMLNode attributeWithName:@"inverseName" stringValue:self.toSqliteColumnName]];
+    [childAttr addAttribute:[NSXMLNode attributeWithName:@"inverseName" stringValue:self.invRelationName]];
     
     [childAttr addAttribute:[NSXMLNode attributeWithName:@"inverseEntity" stringValue:[self.toSqliteTableName capitalizedString]]];
     
