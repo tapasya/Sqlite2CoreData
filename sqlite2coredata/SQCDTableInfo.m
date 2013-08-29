@@ -26,11 +26,7 @@
         SQCDForeignKeyInfo* foreignKeyInfo = [self.foreignKeys valueForKey:colunmInfo.sqliteName];
         
         if (foreignKeyInfo != nil) {
-            // TODO handle relationships based on foreign keys.
-            // Unique foreign key represents one to one on both sides
-            // Non unique foreign key represents one to many on one side and one to one on other side
-            // Need to findout about the many to many scenario
-            // Should figure out a way to handle inverse relationship
+            // TODO Need to findout about the many to many scenario
             [entity addChild:[foreignKeyInfo xmlRepresentation]];
             
         } else{

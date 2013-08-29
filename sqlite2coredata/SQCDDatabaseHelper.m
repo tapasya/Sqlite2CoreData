@@ -44,10 +44,10 @@
                 
                 tableInfo.foreignKeys = [SQCDDatabaseHelper allForeignKeysInTableNamed:tableInfo.sqliteName inDatabase:_db];
                 
-                // Adding inverse relation to the destination table using foreighKeys
-                for (SQCDForeignKeyInfo* foreignKeyInfo in [tableInfo.foreignKeys allValues]) {
-                    [SQCDDatabaseHelper addInverseRelation:foreignKeyInfo];
-                }
+//                // Determine relationship cardinality
+//                for (SQCDForeignKeyInfo* foreignKeyInfo in [tableInfo.foreignKeys allValues]) {
+//                    [SQCDDatabaseHelper addInverseRelation:foreignKeyInfo];
+//                }
                 
                 [tableInfos setValue:tableInfo forKey:tableName];
             }
@@ -66,6 +66,7 @@
 
 + (NSDictionary*) allForeignKeysInTableNamed:(NSString*)tableName inDatabase:(sqlite3*) db
 {
+    NSArray* uniqColumns = [SQCDDatabaseHelper allUniqueColumnsInTableNamed:tableName inDatabase:db];
     sqlite3_stmt* statement;
     NSString *query = [[NSString alloc] initWithFormat:@"pragma foreign_key_list(%@)", tableName];
     int retVal = sqlite3_prepare_v2(db,
@@ -92,8 +93,19 @@
             fkInfo.toSqliteTableName = toTableName;
             fkInfo.fromSqliteColumnName = fromColName;
             fkInfo.toSqliteColumnName = toColName;
-            
+            fkInfo.toMany = NO;
             [foreignKeyInfos setValue:fkInfo forKey:fkInfo.fromSqliteColumnName];
+            
+            // Build inverse relationship object
+            SQCDForeignKeyInfo* invFKInfo = [SQCDForeignKeyInfo new];
+            invFKInfo.fromSqliteTableName = fkInfo.toSqliteTableName;
+            invFKInfo.toSqliteTableName = fkInfo.fromSqliteTableName;
+            invFKInfo.fromSqliteColumnName = fkInfo.toSqliteColumnName;
+            invFKInfo.toSqliteColumnName = fkInfo.fromSqliteColumnName;
+            invFKInfo.toMany = [uniqColumns containsObject:fkInfo.fromSqliteColumnName]==NO;
+            invFKInfo.isInverse = YES;
+            [SQCDDatabaseHelper addInverseRelation:invFKInfo];
+            
         }
     }
     
@@ -178,19 +190,16 @@
     return nil;
 }
 
-+ (void) addInverseRelation:(SQCDForeignKeyInfo*) foreignKeyInfo
++ (void) addInverseRelation:(SQCDForeignKeyInfo*) invForeignKeyInfo
 {
-    NSMutableArray* inverseRelationForTable = [[SQCDDatabaseHelper inverseRelationships] valueForKey:foreignKeyInfo.toSqliteTableName];
+    NSMutableArray* inverseRelationForTable = [[SQCDDatabaseHelper inverseRelationships] valueForKey:invForeignKeyInfo.fromSqliteTableName];
     if (nil == inverseRelationForTable) {
         inverseRelationForTable = [NSMutableArray array];
     }
+        
+    [inverseRelationForTable addObject:invForeignKeyInfo];
     
-    SQCDForeignKeyInfo* inverseInfo = [foreignKeyInfo copy];
-    inverseInfo.isInverse = YES;
-    
-    [inverseRelationForTable addObject:inverseInfo];
-    
-    [[SQCDDatabaseHelper inverseRelationships] setValue:inverseRelationForTable forKey:foreignKeyInfo.toSqliteTableName];
+    [[SQCDDatabaseHelper inverseRelationships] setValue:inverseRelationForTable forKey:invForeignKeyInfo.fromSqliteTableName];
 }
 
 +(NSMutableDictionary*) inverseRelationships
@@ -205,6 +214,59 @@
     });
     
     return inverseDict;
+}
+
++(NSArray*)allUniqueColumnsInTableNamed:(NSString*)tableName inDatabase:(sqlite3*) db
+{
+    sqlite3_stmt* idxListStmt;
+    NSString *query = [[NSString alloc] initWithFormat:@"pragma index_list(%@)", tableName];
+    int retVal = sqlite3_prepare_v2(db,
+                                    [query UTF8String],
+                                    -1,
+                                    &idxListStmt,
+                                    NULL);
+    
+    NSMutableArray *uniqIndexes = [NSMutableArray array];
+    if ( retVal == SQLITE_OK )
+    {
+        while(sqlite3_step(idxListStmt) == SQLITE_ROW )
+        {
+            NSString *unique = [NSString stringWithCString:(const char *)sqlite3_column_text(idxListStmt, 2)
+                                                       encoding:NSUTF8StringEncoding];
+            if ([unique intValue] > 0) {
+                NSString* indexName = [NSString stringWithCString:(const char *)sqlite3_column_text(idxListStmt, 1)
+                                                         encoding:NSUTF8StringEncoding];
+                [uniqIndexes addObject:indexName];
+            }
+        }
+    }
+    sqlite3_clear_bindings(idxListStmt);
+    sqlite3_finalize(idxListStmt);
+    
+    // get the corresponding column names
+    NSMutableArray* uniqColumns = [NSMutableArray array];
+    for (NSString* indexName in uniqIndexes) {
+        sqlite3_stmt* colNameStmt;
+        NSString *query = [[NSString alloc] initWithFormat:@"pragma index_info(%@)", indexName];
+        int retVal = sqlite3_prepare_v2(db,
+                                        [query UTF8String],
+                                        -1,
+                                        &colNameStmt,
+                                        NULL);
+        if ( retVal == SQLITE_OK )
+        {
+            while(sqlite3_step(colNameStmt) == SQLITE_ROW )
+            {
+                NSString *colName = [NSString stringWithCString:(const char *)sqlite3_column_text(colNameStmt, 2)
+                                                      encoding:NSUTF8StringEncoding];
+                [uniqColumns addObject:colName];
+            }
+        }
+        sqlite3_clear_bindings(colNameStmt);
+        sqlite3_finalize(colNameStmt);
+    }
+    
+    return uniqColumns;
 }
 
 @end
