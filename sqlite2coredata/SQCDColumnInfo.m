@@ -44,4 +44,15 @@
     return [NSString stringWithString:output];
 }
 
+- (NSDictionary*) pListRepresentation
+{
+    NSMutableDictionary* columnPlistDict = [NSMutableDictionary dictionary];
+    
+    [columnPlistDict setObject:self.sqliteName forKey:@"columnName"];
+    [columnPlistDict setObject:[self nameForProperty] forKey:@"propertyName"];
+    [columnPlistDict setObject:[SQCDTypeMapper xctypeFromType:self.sqlliteType] forKey:@"propertyType"];
+
+    return columnPlistDict;
+}
+
 @end

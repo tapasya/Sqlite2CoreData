@@ -8,6 +8,7 @@
 
 #import "SQCDMigrationHelper.h"
 #import "SQCDDatabaseHelper.h"
+#import "SQCDPListGenerator.h"
 
 #define kXCDataModelDExtention   @"xcdatamodeld"
 #define kXCDataModelExtention    @"xcdatamodel"
@@ -70,6 +71,14 @@
                               attributes:nil];
     
     isCreated ? NSLog(@"Data model succesfully generated at %@ with name %@", outputPath, fileName): NSLog(@"Data model generation failed");
+    
+    if (isCreated) {
+        NSString* plistPath = [outputPath stringByAppendingFormat:@"/%@.plist", fileName];
+        isCreated = [SQCDPListGenerator generatePListAtPath:plistPath forTableInfos:tableInfos];
+        
+        isCreated ? NSLog(@"Plist succesfully generated at %@ with name %@", plistPath, fileName): NSLog(@"Plist generation failed");
+
+    }
     
     [[NSRunLoop currentRunLoop] runUntilDate:[NSDate dateWithTimeIntervalSinceNow:60]];
 }

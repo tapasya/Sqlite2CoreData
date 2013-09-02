@@ -19,4 +19,6 @@
 
 -(NSXMLElement*) xmlRepresentation;
 
+- (NSDictionary*) pListRepresentation;
+
 @end

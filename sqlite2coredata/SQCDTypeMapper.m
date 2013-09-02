@@ -39,7 +39,7 @@
     if (bracketRange.location != NSNotFound) {
         sqlliteType = [sqlliteType substringToIndex:bracketRange.location];
     }
-    NSString* xcType = [typesDict valueForKey:sqlliteType];
+    NSString* xcType = [typesDict valueForKey:[sqlliteType uppercaseString]];
     if (xcType == nil) {
         NSLog(@"WARNING: Using '%@' for sqllite type '%@'",XCUNDEFINED,sqlliteType);
         xcType = XCUNDEFINED;

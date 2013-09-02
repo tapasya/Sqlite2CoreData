@@ -58,4 +58,34 @@
     return [NSString stringWithString:output];
 }
 
+- (NSDictionary*) pListRepresentation
+{
+    NSMutableDictionary* tablePlistDict = [NSMutableDictionary dictionary];
+    [tablePlistDict setObject:[self representedClassName] forKey:@"entityName"];
+    [tablePlistDict setObject:self.sqliteName forKey:@"tableName"];
+    
+    NSMutableArray* columnPlist = [NSMutableArray array];
+    
+    for (SQCDColumnInfo* colunmInfo in [self.columns allValues]) {
+        SQCDForeignKeyInfo* foreignKeyInfo = [self.foreignKeys valueForKey:colunmInfo.sqliteName];
+        
+        if (foreignKeyInfo != nil) {
+            
+        } else{
+            [columnPlist addObject:[colunmInfo pListRepresentation]];
+        }
+    }
+    
+    [tablePlistDict setObject:columnPlist forKey:@"columnmap"];
+    
+    NSMutableArray* inverseRelationForTable = [[SQCDDatabaseHelper inverseRelationships] valueForKey:self.sqliteName];
+    
+    for (SQCDForeignKeyInfo* inverseInfo in inverseRelationForTable) {
+        
+    }
+
+    
+    return tablePlistDict;
+}
+
 @end
