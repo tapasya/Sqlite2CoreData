@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		84097C9017D496070095F854 /* SQCDPListGenerator.m in Sources */ = {isa = PBXBuildFile; fileRef = 84097C8F17D496070095F854 /* SQCDPListGenerator.m */; };
 		842CD18E17C4B24A000061FC /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 842CD18D17C4B24A000061FC /* Foundation.framework */; };
 		842CD19117C4B24A000061FC /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 842CD19017C4B24A000061FC /* main.m */; };
 		842CD19517C4B24A000061FC /* sqlite2coredata.1 in CopyFiles */ = {isa = PBXBuildFile; fileRef = 842CD19417C4B24A000061FC /* sqlite2coredata.1 */; };
@@ -35,6 +36,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		84097C8E17D496070095F854 /* SQCDPListGenerator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SQCDPListGenerator.h; sourceTree = "<group>"; };
+		84097C8F17D496070095F854 /* SQCDPListGenerator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SQCDPListGenerator.m; sourceTree = "<group>"; };
 		842CD18A17C4B24A000061FC /* sqlite2coredata */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = sqlite2coredata; sourceTree = BUILT_PRODUCTS_DIR; };
 		842CD18D17C4B24A000061FC /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		842CD19017C4B24A000061FC /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -104,6 +107,8 @@
 				842CD19017C4B24A000061FC /* main.m */,
 				842CD1B017C4B90B000061FC /* SQCDMigrationHelper.h */,
 				842CD1B117C4B90B000061FC /* SQCDMigrationHelper.m */,
+				84097C8E17D496070095F854 /* SQCDPListGenerator.h */,
+				84097C8F17D496070095F854 /* SQCDPListGenerator.m */,
 				84A47AA917CBE6E6001EBD54 /* SQCDDatabaseHelper.h */,
 				84A47AAA17CBE6E6001EBD54 /* SQCDDatabaseHelper.m */,
 				8497B78B17C6439200682D8A /* SQCDTypeMapper.h */,
@@ -200,6 +205,7 @@
 				84A47AAE17CBEA0C001EBD54 /* SQCDForeignKeyInfo.m in Sources */,
 				88D2E02217CF476B00D170D6 /* RegexKitLite.m in Sources */,
 				88D2E02517CF542E00D170D6 /* NSString+Inflections.m in Sources */,
+				84097C9017D496070095F854 /* SQCDPListGenerator.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
