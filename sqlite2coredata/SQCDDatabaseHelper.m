@@ -159,6 +159,7 @@
             int nameColumnIndex = 0;
             int typeColumnIndex = 0;
             int nonnullColumnIndex = 0;
+            int pkColumnIndex = 0;
             for (int j=0; j<nColumns; j++) {
                 if (strcmp(results[j], "name") == 0) {
                     nameColumnIndex = j;
@@ -166,6 +167,8 @@
                     typeColumnIndex = j;
                 } else if (strcmp(results[j], "notnull")){
                     nonnullColumnIndex = j;
+                } else if (strcmp(results[j], "pk")){
+                    pkColumnIndex = j;
                 }
             }
             
@@ -177,6 +180,7 @@
                     column.sqliteName = [NSString stringWithCString:results[(i+1)*nColumns + nameColumnIndex] encoding:NSUTF8StringEncoding];
                     column.sqlliteType = [NSString stringWithCString:results[(i+1)*nColumns + typeColumnIndex] encoding:NSUTF8StringEncoding];
                     column.isNonNull = [[NSString stringWithCString:results[(i+1)*nColumns + nonnullColumnIndex] encoding:NSUTF8StringEncoding] boolValue];
+                    column.isPrimaryKey = [[NSString stringWithCString:results[(i+1)*nColumns + pkColumnIndex] encoding:NSUTF8StringEncoding] boolValue];
                     column.sqliteTableName = tableName;
                     // TO DO default value reading
                     [columnInfos setValue:column forKey:column.sqliteName] ;

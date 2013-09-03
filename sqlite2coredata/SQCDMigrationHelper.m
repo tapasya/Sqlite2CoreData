@@ -79,7 +79,5 @@
         isCreated ? NSLog(@"Plist succesfully generated at %@ with name %@", plistPath, fileName): NSLog(@"Plist generation failed");
 
     }
-    
-    [[NSRunLoop currentRunLoop] runUntilDate:[NSDate dateWithTimeIntervalSinceNow:60]];
 }
 @end

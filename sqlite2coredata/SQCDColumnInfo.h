@@ -14,6 +14,7 @@
 @property (nonatomic, strong) NSString* sqlliteType;
 @property (nonatomic, strong) NSString* sqliteDefaultValue;
 @property (nonatomic, assign) BOOL isNonNull;
+@property (nonatomic, assign) BOOL isPrimaryKey;
 
 @property (nonatomic, assign) NSString* sqliteTableName;
 
