@@ -165,10 +165,10 @@
                     nameColumnIndex = j;
                 } else if(strcmp(results[j], "type") == 0){
                     typeColumnIndex = j;
-                } else if (strcmp(results[j], "notnull")){
+                } else if (strcmp(results[j], "pk") == 0){
+                        pkColumnIndex = j;
+                } else if (strcmp(results[j], "notnull") == 0){
                     nonnullColumnIndex = j;
-                } else if (strcmp(results[j], "pk")){
-                    pkColumnIndex = j;
                 }
             }
             
