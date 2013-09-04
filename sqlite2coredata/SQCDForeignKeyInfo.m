@@ -30,6 +30,18 @@
     return childAttr;
 }
 
+- (NSDictionary*) pListRepresentation
+{
+    NSMutableDictionary* columnPlistDict = [NSMutableDictionary dictionary];
+    
+    [columnPlistDict setObject:self.relationName forKey:@"name"];
+//    [columnPlistDict setObject:[self nameForProperty] forKey:@"propertyName"];
+//    [columnPlistDict setObject:[SQCDTypeMapper xctypeFromType:self.sqlliteType] forKey:@"propertyType"];
+//    [columnPlistDict setObject:[NSNumber numberWithBool:(self.isNonNull==NO)] forKey:@"optional"];
+    
+    return columnPlistDict;
+}
+
 - (id) copyWithZone:(NSZone *)zone;
 {
     SQCDForeignKeyInfo* copy = [SQCDForeignKeyInfo new];

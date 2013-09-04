@@ -65,13 +65,15 @@
     [tablePlistDict setObject:self.sqliteName forKey:@"tableName"];
     
     NSMutableArray* columnPlist = [NSMutableArray array];
-    
+    NSMutableArray* fkplist = [NSMutableArray array];
     NSMutableArray* pkColumnNames = [NSMutableArray array];
     for (SQCDColumnInfo* columnInfo in [self.columns allValues]) {
         SQCDForeignKeyInfo* foreignKeyInfo = [self.foreignKeys valueForKey:columnInfo.sqliteName];
         
         if (foreignKeyInfo != nil) {
-            
+            NSMutableDictionary* fkPlistDict = [NSMutableDictionary dictionaryWithDictionary:[foreignKeyInfo pListRepresentation]];
+            [fkPlistDict setValue:[NSNumber numberWithBool:(columnInfo.isNonNull==NO)] forKey:@"optional"];
+            [fkplist addObject:fkPlistDict];
         } else{
             [columnPlist addObject:[columnInfo pListRepresentation]];
         }
@@ -82,6 +84,7 @@
     
     [tablePlistDict setObject:columnPlist forKey:@"columnmap"];
     [tablePlistDict setObject:pkColumnNames forKey:@"primarykeys"];
+    [tablePlistDict setObject:fkplist forKey:@"foreignkeys"];
     NSMutableArray* inverseRelationForTable = [[SQCDDatabaseHelper inverseRelationships] valueForKey:self.sqliteName];
     
     for (SQCDForeignKeyInfo* inverseInfo in inverseRelationForTable) {
