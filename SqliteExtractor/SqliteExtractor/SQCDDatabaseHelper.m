@@ -7,6 +7,7 @@
 //
 
 #import "SQCDDatabaseHelper.h"
+#import "NSString+Inflections.h"
 
 @implementation SQCDDatabaseHelper
 

@@ -7,7 +7,6 @@
 //
 
 #import "SQCDPListGenerator.h"
-#import "SQCDTableInfo.h"
 
 @implementation SQCDPListGenerator
 

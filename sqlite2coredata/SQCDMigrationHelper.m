@@ -7,7 +7,6 @@
 //
 
 #import "SQCDMigrationHelper.h"
-#import "SQCDDatabaseHelper.h"
 #import "SQCDPListGenerator.h"
 
 #define kXCDataModelDExtention   @"xcdatamodeld"

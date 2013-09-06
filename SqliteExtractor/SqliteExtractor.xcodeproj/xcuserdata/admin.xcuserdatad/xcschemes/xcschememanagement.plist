@@ -4,7 +4,7 @@
 <dict>
 	<key>SchemeUserState</key>
 	<dict>
-		<key>sqlite2coredata.xcscheme</key>
+		<key>SqliteExtractor.xcscheme</key>
 		<dict>
 			<key>orderHint</key>
 			<integer>0</integer>
@@ -12,12 +12,7 @@
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
-		<key>842CD18917C4B24A000061FC</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>84D4BB8717D9D2BF008D6A99</key>
+		<key>84D4BBA017D9D37C008D6A99</key>
 		<dict>
 			<key>primary</key>
 			<true/>

@@ -21,25 +21,90 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "sqlite2coredata/SQCDMigrationHelper.m"
-         timestampString = "398947204.718263"
+         timestampString = "400152953.175021"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "172"
-         endingLineNumber = "172"
-         landmarkName = "+allColumnsInTableNamed:dbPath:"
+         startingLineNumber = "67"
+         endingLineNumber = "67"
+         landmarkName = "+generateCoreDataModelFromDBPath:outputDirectoryPath:fileName:"
          landmarkType = "5">
       </FileBreakpoint>
       <FileBreakpoint
          shouldBeEnabled = "No"
          ignoreCount = "0"
          continueAfterRunningActions = "No"
-         filePath = "sqlite2coredata/SQCDMigrationHelper.m"
-         timestampString = "398947204.718263"
+         filePath = "sqlite2coredata/SQCDTableInfo.m"
+         timestampString = "400071287.747392"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "75"
-         endingLineNumber = "75"
-         landmarkName = "+generateCoreDataModelFromDBPath:outputDirectoryPath:fileName:"
+         startingLineNumber = "85"
+         endingLineNumber = "85"
+         landmarkName = "-pListRepresentation"
+         landmarkType = "5">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "No"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         filePath = "sqlite2coredata/main.m"
+         timestampString = "399057728.312894"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "25"
+         endingLineNumber = "25"
+         landmarkName = "main()"
+         landmarkType = "7">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "No"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         filePath = "sqlite2coredata/SQCDDatabaseHelper.m"
+         timestampString = "399378735.393857"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "90"
+         endingLineNumber = "90"
+         landmarkName = "+allForeignKeysInTableNamed:inDatabase:"
+         landmarkType = "5">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "No"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         filePath = "sqlite2coredata/SQCDTableInfo.m"
+         timestampString = "400071458.165665"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "34"
+         endingLineNumber = "34"
+         landmarkName = "-xmlRepresentation"
+         landmarkType = "5">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "No"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         filePath = "sqlite2coredata/SQCDDatabaseHelper.m"
+         timestampString = "399378735.393857"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "52"
+         endingLineNumber = "52"
+         landmarkName = "+fetchTableInfos:"
+         landmarkType = "5">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "No"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         filePath = "sqlite2coredata/SQCDDatabaseHelper.m"
+         timestampString = "399378733.831302"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "183"
+         endingLineNumber = "183"
+         landmarkName = "+allColumnsInTableNamed:dbPath:"
          landmarkType = "5">
       </FileBreakpoint>
    </FileBreakpoints>

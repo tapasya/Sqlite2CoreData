@@ -13,14 +13,25 @@
 		842CD19517C4B24A000061FC /* sqlite2coredata.1 in CopyFiles */ = {isa = PBXBuildFile; fileRef = 842CD19417C4B24A000061FC /* sqlite2coredata.1 */; };
 		842CD19C17C4B284000061FC /* libsqlite3.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 842CD19B17C4B284000061FC /* libsqlite3.0.dylib */; };
 		842CD1B217C4B90B000061FC /* SQCDMigrationHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 842CD1B117C4B90B000061FC /* SQCDMigrationHelper.m */; };
-		8497B78E17C6439200682D8A /* SQCDTypeMapper.m in Sources */ = {isa = PBXBuildFile; fileRef = 8497B78A17C6439200682D8A /* SQCDTypeMapper.m */; };
-		8497B79117C663B300682D8A /* SQCDColumnInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 8497B79017C663B300682D8A /* SQCDColumnInfo.m */; };
-		8497B79417C66D9000682D8A /* SQCDTableInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 8497B79317C66D9000682D8A /* SQCDTableInfo.m */; };
-		84A47AAB17CBE6E6001EBD54 /* SQCDDatabaseHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 84A47AAA17CBE6E6001EBD54 /* SQCDDatabaseHelper.m */; };
-		84A47AAE17CBEA0C001EBD54 /* SQCDForeignKeyInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 84A47AAD17CBEA0C001EBD54 /* SQCDForeignKeyInfo.m */; };
-		88D2E02217CF476B00D170D6 /* RegexKitLite.m in Sources */ = {isa = PBXBuildFile; fileRef = 88D2E02017CF476B00D170D6 /* RegexKitLite.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
-		88D2E02517CF542E00D170D6 /* NSString+Inflections.m in Sources */ = {isa = PBXBuildFile; fileRef = 88D2E02417CF542E00D170D6 /* NSString+Inflections.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		84D4BBEA17D9D974008D6A99 /* libSqliteExtractor.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 84D4BBE217D9D570008D6A99 /* libSqliteExtractor.a */; };
 /* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		84D4BBE117D9D570008D6A99 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 84D4BBDD17D9D570008D6A99 /* SqliteExtractor.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 84D4BBA117D9D37C008D6A99;
+			remoteInfo = SqliteExtractor;
+		};
+		84D4BBE317D9D588008D6A99 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 84D4BBDD17D9D570008D6A99 /* SqliteExtractor.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 84D4BBA017D9D37C008D6A99;
+			remoteInfo = SqliteExtractor;
+		};
+/* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
 		842CD18817C4B24A000061FC /* CopyFiles */ = {
@@ -46,20 +57,11 @@
 		842CD19B17C4B284000061FC /* libsqlite3.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.0.dylib; path = usr/lib/libsqlite3.0.dylib; sourceTree = SDKROOT; };
 		842CD1B017C4B90B000061FC /* SQCDMigrationHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SQCDMigrationHelper.h; sourceTree = "<group>"; };
 		842CD1B117C4B90B000061FC /* SQCDMigrationHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SQCDMigrationHelper.m; sourceTree = "<group>"; };
-		8497B78A17C6439200682D8A /* SQCDTypeMapper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SQCDTypeMapper.m; sourceTree = "<group>"; };
-		8497B78B17C6439200682D8A /* SQCDTypeMapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SQCDTypeMapper.h; sourceTree = "<group>"; };
-		8497B78F17C663B300682D8A /* SQCDColumnInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SQCDColumnInfo.h; sourceTree = "<group>"; };
-		8497B79017C663B300682D8A /* SQCDColumnInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SQCDColumnInfo.m; sourceTree = "<group>"; };
-		8497B79217C66D9000682D8A /* SQCDTableInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SQCDTableInfo.h; sourceTree = "<group>"; };
-		8497B79317C66D9000682D8A /* SQCDTableInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SQCDTableInfo.m; sourceTree = "<group>"; };
-		84A47AA917CBE6E6001EBD54 /* SQCDDatabaseHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SQCDDatabaseHelper.h; sourceTree = "<group>"; };
-		84A47AAA17CBE6E6001EBD54 /* SQCDDatabaseHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SQCDDatabaseHelper.m; sourceTree = "<group>"; };
-		84A47AAC17CBEA0C001EBD54 /* SQCDForeignKeyInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SQCDForeignKeyInfo.h; sourceTree = "<group>"; };
-		84A47AAD17CBEA0C001EBD54 /* SQCDForeignKeyInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SQCDForeignKeyInfo.m; sourceTree = "<group>"; };
-		88D2E01F17CF476B00D170D6 /* RegexKitLite.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RegexKitLite.h; sourceTree = "<group>"; };
-		88D2E02017CF476B00D170D6 /* RegexKitLite.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RegexKitLite.m; sourceTree = "<group>"; };
-		88D2E02317CF542E00D170D6 /* NSString+Inflections.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+Inflections.h"; sourceTree = "<group>"; };
-		88D2E02417CF542E00D170D6 /* NSString+Inflections.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+Inflections.m"; sourceTree = "<group>"; };
+		84D4BB8917D9D2BF008D6A99 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
+		84D4BB8C17D9D2BF008D6A99 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
+		84D4BB8D17D9D2BF008D6A99 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
+		84D4BB8E17D9D2BF008D6A99 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		84D4BBDD17D9D570008D6A99 /* SqliteExtractor.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = SqliteExtractor.xcodeproj; path = SqliteExtractor/SqliteExtractor.xcodeproj; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -67,6 +69,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				84D4BBEA17D9D974008D6A99 /* libSqliteExtractor.a in Frameworks */,
 				842CD19C17C4B284000061FC /* libsqlite3.0.dylib in Frameworks */,
 				842CD18E17C4B24A000061FC /* Foundation.framework in Frameworks */,
 			);
@@ -81,6 +84,7 @@
 				842CD18F17C4B24A000061FC /* sqlite2coredata */,
 				842CD18C17C4B24A000061FC /* Frameworks */,
 				842CD18B17C4B24A000061FC /* Products */,
+				84D4BBDD17D9D570008D6A99 /* SqliteExtractor.xcodeproj */,
 			);
 			sourceTree = "<group>";
 		};
@@ -97,6 +101,8 @@
 			children = (
 				842CD19B17C4B284000061FC /* libsqlite3.0.dylib */,
 				842CD18D17C4B24A000061FC /* Foundation.framework */,
+				84D4BB8917D9D2BF008D6A99 /* Cocoa.framework */,
+				84D4BB8B17D9D2BF008D6A99 /* Other Frameworks */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -109,16 +115,6 @@
 				842CD1B117C4B90B000061FC /* SQCDMigrationHelper.m */,
 				84097C8E17D496070095F854 /* SQCDPListGenerator.h */,
 				84097C8F17D496070095F854 /* SQCDPListGenerator.m */,
-				84A47AA917CBE6E6001EBD54 /* SQCDDatabaseHelper.h */,
-				84A47AAA17CBE6E6001EBD54 /* SQCDDatabaseHelper.m */,
-				8497B78B17C6439200682D8A /* SQCDTypeMapper.h */,
-				8497B78A17C6439200682D8A /* SQCDTypeMapper.m */,
-				8497B78F17C663B300682D8A /* SQCDColumnInfo.h */,
-				8497B79017C663B300682D8A /* SQCDColumnInfo.m */,
-				84A47AAC17CBEA0C001EBD54 /* SQCDForeignKeyInfo.h */,
-				84A47AAD17CBEA0C001EBD54 /* SQCDForeignKeyInfo.m */,
-				8497B79217C66D9000682D8A /* SQCDTableInfo.h */,
-				8497B79317C66D9000682D8A /* SQCDTableInfo.m */,
 				842CD19417C4B24A000061FC /* sqlite2coredata.1 */,
 				842CD19217C4B24A000061FC /* Supporting Files */,
 			);
@@ -128,21 +124,27 @@
 		842CD19217C4B24A000061FC /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				88D2E01B17CF473F00D170D6 /* NSString+Inflections */,
 				842CD19317C4B24A000061FC /* sqlite2coredata-Prefix.pch */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
-		88D2E01B17CF473F00D170D6 /* NSString+Inflections */ = {
+		84D4BB8B17D9D2BF008D6A99 /* Other Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				88D2E02317CF542E00D170D6 /* NSString+Inflections.h */,
-				88D2E02417CF542E00D170D6 /* NSString+Inflections.m */,
-				88D2E01F17CF476B00D170D6 /* RegexKitLite.h */,
-				88D2E02017CF476B00D170D6 /* RegexKitLite.m */,
+				84D4BB8C17D9D2BF008D6A99 /* AppKit.framework */,
+				84D4BB8D17D9D2BF008D6A99 /* CoreData.framework */,
+				84D4BB8E17D9D2BF008D6A99 /* Foundation.framework */,
 			);
-			name = "NSString+Inflections";
+			name = "Other Frameworks";
+			sourceTree = "<group>";
+		};
+		84D4BBDE17D9D570008D6A99 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				84D4BBE217D9D570008D6A99 /* libSqliteExtractor.a */,
+			);
+			name = Products;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -159,6 +161,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				84D4BBE417D9D588008D6A99 /* PBXTargetDependency */,
 			);
 			name = sqlite2coredata;
 			productName = sqlite2coredata;
@@ -184,12 +187,28 @@
 			mainGroup = 842CD18117C4B24A000061FC;
 			productRefGroup = 842CD18B17C4B24A000061FC /* Products */;
 			projectDirPath = "";
+			projectReferences = (
+				{
+					ProductGroup = 84D4BBDE17D9D570008D6A99 /* Products */;
+					ProjectRef = 84D4BBDD17D9D570008D6A99 /* SqliteExtractor.xcodeproj */;
+				},
+			);
 			projectRoot = "";
 			targets = (
 				842CD18917C4B24A000061FC /* sqlite2coredata */,
 			);
 		};
 /* End PBXProject section */
+
+/* Begin PBXReferenceProxy section */
+		84D4BBE217D9D570008D6A99 /* libSqliteExtractor.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libSqliteExtractor.a;
+			remoteRef = 84D4BBE117D9D570008D6A99 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+/* End PBXReferenceProxy section */
 
 /* Begin PBXSourcesBuildPhase section */
 		842CD18617C4B24A000061FC /* Sources */ = {
@@ -198,18 +217,19 @@
 			files = (
 				842CD19117C4B24A000061FC /* main.m in Sources */,
 				842CD1B217C4B90B000061FC /* SQCDMigrationHelper.m in Sources */,
-				8497B78E17C6439200682D8A /* SQCDTypeMapper.m in Sources */,
-				8497B79117C663B300682D8A /* SQCDColumnInfo.m in Sources */,
-				8497B79417C66D9000682D8A /* SQCDTableInfo.m in Sources */,
-				84A47AAB17CBE6E6001EBD54 /* SQCDDatabaseHelper.m in Sources */,
-				84A47AAE17CBEA0C001EBD54 /* SQCDForeignKeyInfo.m in Sources */,
-				88D2E02217CF476B00D170D6 /* RegexKitLite.m in Sources */,
-				88D2E02517CF542E00D170D6 /* NSString+Inflections.m in Sources */,
 				84097C9017D496070095F854 /* SQCDPListGenerator.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		84D4BBE417D9D588008D6A99 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = SqliteExtractor;
+			targetProxy = 84D4BBE317D9D588008D6A99 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
 		842CD19617C4B24A000061FC /* Debug */ = {
@@ -241,6 +261,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				MACOSX_DEPLOYMENT_TARGET = 10.8;
 				ONLY_ACTIVE_ARCH = YES;
+				OTHER_LDFLAGS = "-all_load";
 				SDKROOT = macosx;
 			};
 			name = Debug;
@@ -267,6 +288,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				MACOSX_DEPLOYMENT_TARGET = 10.8;
+				OTHER_LDFLAGS = "-all_load";
 				SDKROOT = macosx;
 			};
 			name = Release;
@@ -276,8 +298,12 @@
 			buildSettings = {
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "sqlite2coredata/sqlite2coredata-Prefix.pch";
+				HEADER_SEARCH_PATHS = "$(PROJECT_DIR)/SqliteExtractor/**";
 				MACOSX_DEPLOYMENT_TARGET = 10.8;
-				OTHER_LDFLAGS = "-licucore";
+				OTHER_LDFLAGS = (
+					"-licucore",
+					"-all_load",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
@@ -287,8 +313,12 @@
 			buildSettings = {
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "sqlite2coredata/sqlite2coredata-Prefix.pch";
+				HEADER_SEARCH_PATHS = "$(PROJECT_DIR)/SqliteExtractor/**";
 				MACOSX_DEPLOYMENT_TARGET = 10.8;
-				OTHER_LDFLAGS = "-licucore";
+				OTHER_LDFLAGS = (
+					"-licucore",
+					"-all_load",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;

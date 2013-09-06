@@ -14,10 +14,10 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "842CD18917C4B24A000061FC"
-               BuildableName = "sqlite2coredata"
-               BlueprintName = "sqlite2coredata"
-               ReferencedContainer = "container:sqlite2coredata.xcodeproj">
+               BlueprintIdentifier = "84D4BBA017D9D37C008D6A99"
+               BuildableName = "libSqliteExtractor.a"
+               BlueprintName = "SqliteExtractor"
+               ReferencedContainer = "container:SqliteExtractor.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -29,15 +29,6 @@
       buildConfiguration = "Debug">
       <Testables>
       </Testables>
-      <MacroExpansion>
-         <BuildableReference
-            BuildableIdentifier = "primary"
-            BlueprintIdentifier = "842CD18917C4B24A000061FC"
-            BuildableName = "sqlite2coredata"
-            BlueprintName = "sqlite2coredata"
-            ReferencedContainer = "container:sqlite2coredata.xcodeproj">
-         </BuildableReference>
-      </MacroExpansion>
    </TestAction>
    <LaunchAction
       selectedDebuggerIdentifier = "Xcode.DebuggerFoundation.Debugger.LLDB"
@@ -48,25 +39,6 @@
       ignoresPersistentStateOnLaunch = "NO"
       debugDocumentVersioning = "YES"
       allowLocationSimulation = "YES">
-      <BuildableProductRunnable>
-         <BuildableReference
-            BuildableIdentifier = "primary"
-            BlueprintIdentifier = "842CD18917C4B24A000061FC"
-            BuildableName = "sqlite2coredata"
-            BlueprintName = "sqlite2coredata"
-            ReferencedContainer = "container:sqlite2coredata.xcodeproj">
-         </BuildableReference>
-      </BuildableProductRunnable>
-      <CommandLineArguments>
-         <CommandLineArgument
-            argument = "~/Desktop/Chinook_Sqlite.sqlite"
-            isEnabled = "YES">
-         </CommandLineArgument>
-         <CommandLineArgument
-            argument = "~/Desktop/"
-            isEnabled = "YES">
-         </CommandLineArgument>
-      </CommandLineArguments>
       <AdditionalOptions>
       </AdditionalOptions>
    </LaunchAction>
@@ -76,15 +48,6 @@
       useCustomWorkingDirectory = "NO"
       buildConfiguration = "Release"
       debugDocumentVersioning = "YES">
-      <BuildableProductRunnable>
-         <BuildableReference
-            BuildableIdentifier = "primary"
-            BlueprintIdentifier = "842CD18917C4B24A000061FC"
-            BuildableName = "sqlite2coredata"
-            BlueprintName = "sqlite2coredata"
-            ReferencedContainer = "container:sqlite2coredata.xcodeproj">
-         </BuildableReference>
-      </BuildableProductRunnable>
    </ProfileAction>
    <AnalyzeAction
       buildConfiguration = "Debug">
