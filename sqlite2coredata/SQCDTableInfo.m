@@ -25,7 +25,7 @@
     for (SQCDColumnInfo* colunmInfo in [self.columns allValues]) {
         SQCDForeignKeyInfo* foreignKeyInfo = [self.foreignKeys valueForKey:colunmInfo.sqliteName];
         
-        if (foreignKeyInfo != nil) {
+        if (foreignKeyInfo != nil && ![foreignKeyInfo.toSqliteTableName isEqualToString:self.sqliteName]) {
             // TODO Need to findout about the many to many scenario
             [entity addChild:[foreignKeyInfo xmlRepresentation]];
             
@@ -37,8 +37,9 @@
     NSMutableArray* inverseRelationForTable = [[SQCDDatabaseHelper inverseRelationships] valueForKey:self.sqliteName];
     
     for (SQCDForeignKeyInfo* inverseInfo in inverseRelationForTable) {
-        [entity addChild:[inverseInfo xmlRepresentation]];
-
+        if (![inverseInfo.toSqliteTableName isEqualToString:inverseInfo.fromSqliteTableName]) {
+            [entity addChild:[inverseInfo xmlRepresentation]];
+        }
     }
     
     return entity;
@@ -70,7 +71,7 @@
     for (SQCDColumnInfo* columnInfo in [self.columns allValues]) {
         SQCDForeignKeyInfo* foreignKeyInfo = [self.foreignKeys valueForKey:columnInfo.sqliteName];
         
-        if (foreignKeyInfo != nil) {
+        if (foreignKeyInfo != nil && ![foreignKeyInfo.toSqliteTableName isEqualToString:self.sqliteName]) {
             NSMutableDictionary* fkPlistDict = [NSMutableDictionary dictionaryWithDictionary:[foreignKeyInfo pListRepresentation]];
             [fkPlistDict setValue:[NSNumber numberWithBool:(columnInfo.isNonNull==NO)] forKey:@"optional"];
             [fkplist addObject:fkPlistDict];
@@ -84,13 +85,15 @@
     
     [tablePlistDict setObject:columnPlist forKey:@"columnmap"];
     [tablePlistDict setObject:pkColumnNames forKey:@"primarykeys"];
-    [tablePlistDict setObject:fkplist forKey:@"foreignkeys"];
-    NSMutableArray* inverseRelationForTable = [[SQCDDatabaseHelper inverseRelationships] valueForKey:self.sqliteName];
+    [tablePlistDict setObject:fkplist forKey:@"foreignkeymap"];
     
-    for (SQCDForeignKeyInfo* inverseInfo in inverseRelationForTable) {
-        
-    }
+    NSMutableArray* inverseRelationForTable = [[SQCDDatabaseHelper inverseRelationships] valueForKey:self.sqliteName];
 
+    for (SQCDForeignKeyInfo* inverseInfo in inverseRelationForTable) {
+        if (![inverseInfo.toSqliteTableName isEqualToString:inverseInfo.fromSqliteTableName]) {
+
+        }
+    }
     
     return tablePlistDict;
 }

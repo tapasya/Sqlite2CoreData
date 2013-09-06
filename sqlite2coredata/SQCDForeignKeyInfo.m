@@ -27,19 +27,16 @@
     [childAttr addAttribute:[NSXMLNode attributeWithName:@"deletionRule" stringValue:@"Nullify"]];
     [childAttr addAttribute:[NSXMLNode attributeWithName:@"syncable" stringValue:@"YES"]];
     
+    // TODO should set based on optional parameter
+    [childAttr addAttribute:[NSXMLNode attributeWithName:@"minCount" stringValue:@"1"]];
+    
+    if (!self.toMany) {
+        [childAttr addAttribute:[NSXMLNode attributeWithName:@"maxCount" stringValue:@"1"]];
+    }
+    
+    [childAttr addAttribute:[NSXMLNode attributeWithName:@"optional" stringValue:self.isInverse ? @"YES": @"NO"]];
+    
     return childAttr;
-}
-
-- (NSDictionary*) pListRepresentation
-{
-    NSMutableDictionary* columnPlistDict = [NSMutableDictionary dictionary];
-    
-    [columnPlistDict setObject:self.relationName forKey:@"name"];
-//    [columnPlistDict setObject:[self nameForProperty] forKey:@"propertyName"];
-//    [columnPlistDict setObject:[SQCDTypeMapper xctypeFromType:self.sqlliteType] forKey:@"propertyType"];
-//    [columnPlistDict setObject:[NSNumber numberWithBool:(self.isNonNull==NO)] forKey:@"optional"];
-    
-    return columnPlistDict;
 }
 
 - (id) copyWithZone:(NSZone *)zone;
@@ -55,6 +52,49 @@
     }
     
     return copy;
+}
+
+- (NSString*) nameForProperty:(NSString*) columnName
+{
+    columnName = [columnName lowercaseString];
+        
+    NSArray *components = [columnName componentsSeparatedByString:@"_"];
+    NSMutableString *output = [NSMutableString string];
+    
+    for (NSUInteger i = 0; i < components.count; i++) {
+        if (i == 0) {
+            [output appendString:components[i]];
+        } else {
+            [output appendString:[components[i] capitalizedString]];
+        }
+    }
+    
+    return [NSString stringWithString:output];
+}
+
+
+- (NSDictionary*) pListRepresentation
+{
+    NSMutableDictionary* relationPlistDict = [NSMutableDictionary dictionary];
+    
+    [relationPlistDict setObject:[self.fromSqliteTableName capitalizedString] forKey:@"fromEntityName"];
+    [relationPlistDict setObject:[self.toSqliteTableName capitalizedString] forKey:@"toEntityName"];
+    
+    [relationPlistDict setObject:self.relationName forKey:@"relationName"];
+    [relationPlistDict setObject:self.invRelationName forKey:@"inverseRelationName"];
+
+    [relationPlistDict setObject:self.fromSqliteTableName forKey:@"fromTableName"];
+    [relationPlistDict setObject:self.toSqliteTableName forKey:@"toTableName"];
+
+    [relationPlistDict setObject:self.fromSqliteColumnName forKey:@"fromColumnName"];
+    [relationPlistDict setObject:self.toSqliteColumnName forKey:@"toColumnName"];
+    
+    [relationPlistDict setObject:[self nameForProperty:self.fromSqliteColumnName] forKey:@"fromPropertyName"];
+    [relationPlistDict setObject:[self nameForProperty:self.toSqliteColumnName] forKey:@"toPropertyName"];
+
+    [relationPlistDict setObject:self.toMany?@"YES":@"NO" forKey:@"isToMany"];
+    
+    return relationPlistDict;
 }
 
 @end
