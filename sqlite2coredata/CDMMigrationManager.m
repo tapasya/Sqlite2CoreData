@@ -42,7 +42,7 @@
     
     BOOL isTwoStep = NO;
     
-    [CDMMigrationManager testRelationship:moc];
+//    [CDMMigrationManager testRelationship:moc];
 
     [CDMMigrationManager migrateTableDataFromDatabase:database
                                toManagedObjectContext:moc
@@ -52,7 +52,7 @@
                                toManagedObjectContext:moc];
     }
     
-    [CDMMigrationManager testRelationship:moc];
+//    [CDMMigrationManager testRelationship:moc];
     
     [database close];
     
@@ -406,13 +406,14 @@
 
 + (FMDatabase *)openDatabase
 {
-    NSFileManager *fm = [NSFileManager defaultManager];
-    NSString *documents_dir = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
-    NSString *db_path = [documents_dir stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.%@", DBNAME, DBEXTENSION]];
-    NSString *template_path = [[NSBundle mainBundle] pathForResource:DBNAME ofType:DBEXTENSION];
-    
-    if (![fm fileExistsAtPath:db_path])
-        [fm copyItemAtPath:template_path toPath:db_path error:nil];
+//    NSFileManager *fm = [NSFileManager defaultManager];
+//    NSString *documents_dir = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
+//    NSString *db_path = [documents_dir stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.%@", DBNAME, DBEXTENSION]];
+//    NSString *template_path = [[NSBundle mainBundle] pathForResource:DBNAME ofType:DBEXTENSION];
+//    
+//    if (![fm fileExistsAtPath:db_path])
+//        [fm copyItemAtPath:template_path toPath:db_path error:nil];
+    NSString *db_path = [[@"/Users/adityad/Developer/ChinookDatabase1.4_Sqlite" stringByAppendingPathComponent:DBNAME] stringByAppendingPathExtension:DBEXTENSION];
     FMDatabase *db = [FMDatabase databaseWithPath:db_path];
     if (![db open])
         NSLog(@"Failed to open database!");
@@ -425,7 +426,7 @@
     static dispatch_once_t pred;
     static NSDictionary* inverseDict = nil;
     dispatch_once(&pred, ^{
-        NSString *template_path = [[NSBundle mainBundle] pathForResource:DBNAME ofType:DBEXTENSION];
+        NSString *template_path = [[@"/Users/adityad/Developer/ChinookDatabase1.4_Sqlite" stringByAppendingPathComponent:DBNAME] stringByAppendingPathExtension:DBEXTENSION];
         inverseDict = [SQCDDatabaseHelper fetchTableInfos:template_path];
         if (inverseDict == nil) {
             NSLog(@"Could not initialize inverse dictionary");

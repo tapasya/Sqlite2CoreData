@@ -18,8 +18,10 @@
 // Returns the directory the application uses to store the Core Data store file. This code uses a directory named "hg.HGGroup" in the user's Application Support directory.
 - (NSURL *)applicationFilesDirectory
 {
-    NSFileManager *fileManager = [NSFileManager defaultManager];
-    NSURL *appSupportURL = [[fileManager URLsForDirectory:NSApplicationSupportDirectory inDomains:NSUserDomainMask] lastObject];
+//    NSFileManager *fileManager = [NSFileManager defaultManager];
+//    NSURL *appSupportURL = [[fileManager URLsForDirectory:NSApplicationSupportDirectory inDomains:NSUserDomainMask] lastObject];
+//    return [appSupportURL URLByAppendingPathComponent:@"cdm"];
+    NSURL* appSupportURL = [[NSURL alloc] initFileURLWithPath:@"/Users/adityad/Desktop" isDirectory:YES];
     return [appSupportURL URLByAppendingPathComponent:@"cdm"];
 }
 
@@ -30,7 +32,9 @@
         return _managedObjectModel;
     }
 	
-    NSURL *modelURL = [[NSBundle mainBundle] URLForResource:DATAMODELNAME withExtension:@"momd"];
+    //NSURL *modelURL = [[NSBundle mainBundle] URLForResource:DATAMODELNAME withExtension:@"momd"];
+    NSURL *modelDirURL = [[NSURL alloc] initFileURLWithPath:@"/Users/adityad/Developer/ChinookDatabase1.4_Sqlite" isDirectory:YES];
+    NSURL *modelURL = [[modelDirURL URLByAppendingPathComponent:DATAMODELNAME] URLByAppendingPathExtension:@"momd"];
     _managedObjectModel = [[NSManagedObjectModel alloc] initWithContentsOfURL:modelURL];
 //    _managedObjectModel = [CDMCoreDataManager createModel];
     return _managedObjectModel;

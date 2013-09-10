@@ -9,10 +9,10 @@
 #import <Foundation/Foundation.h>
 #import <CoreData/CoreData.h>
 
-#define DATAMODELNAME @"Chinook_Sqlite"
-#define DBNAME          @"Chinook_Sqlite"
+#define DATAMODELNAME @"ChinookSmall"
+#define DBNAME          @"ChinookSmall"
 #define DBEXTENSION     @"sqlite"
-#define PLIST_NAME      @"Chinook_Sqlite"
+#define PLIST_NAME      @"ChinookSmall"
 
 @interface CDMCoreDataManager : NSObject
 {

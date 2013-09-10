@@ -8,6 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import "SQCDMigrationHelper.h"
+#import "CDMMigrationManager.h"
 
 int main(int argc, const char * argv[])
 {
@@ -37,7 +38,7 @@ int main(int argc, const char * argv[])
         }
         
         NSTask* task = [[NSTask alloc] init];
-        [task setLaunchPath:@"/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/usr/bin/momc"];
+        [task setLaunchPath:@"/Applications/Xcode.app/Contents/Developer/usr/bin/momc"];
         //NSString* options = @"-XD_MOMC_SDKROOT=/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator6.0.sdk -XD_MOMC_IOS_TARGET_VERSION=6.0 -MOMC_PLATFORMS iphonesimulator -MOMC_PLATFORMS iphoneos -XD_MOMC_TARGET_VERSION=10.6";
         NSString* options = @"-XD_MOMC_SDKROOT=/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.8.sdk -MOMC_PLATFORMS macosx -XD_MOMC_TARGET_VERSION=10.7";
         NSString* xcModelPath = [[outputPath stringByAppendingPathComponent:fileName] stringByAppendingPathExtension:@"xcdatamodeld"];
@@ -55,6 +56,10 @@ int main(int argc, const char * argv[])
         }];
         [task launch];
         [task waitUntilExit];
+        
+        // migrate
+        [CDMMigrationManager startDataMigration];
+        
     }
     return 0;
 }
