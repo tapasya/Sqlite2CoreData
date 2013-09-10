@@ -6,9 +6,9 @@
 //  Copyright (c) 2013 Tapasya. All rights reserved.
 //
 
-#import "CDMMigrationManager.h"
+#import "SQCDMigrationManager.h"
 #import "FMDatabase.h"
-#import "CDMCoreDataManager.h"
+#import "SQCDCoreDataManager.h"
 #import "SqliteExtractor.h"
 
 #define XCUNDEFINED             @"Undefined"
@@ -24,56 +24,29 @@
 #define XCBINARY                @"Binary Data"
 #define XCTRANFORMABLE          @"Transformable"
 
-@implementation CDMMigrationManager
-
-+ (BOOL) isDataMigrated
-{
-    return YES;
-}
+@implementation SQCDMigrationManager
 
 #pragma mark - Migration
 
-+(BOOL) startDataMigration
++(BOOL) startDataMigrationWithDBPath:(NSString*) dbPath
+                            momdPath:(NSString*) momnPath
+                          outputPath:(NSString*) outputPath
 {
-    FMDatabase* database = [CDMMigrationManager openDatabase];
+    // Set db path to be reused later
+    [SQCDMigrationManager dbPath:dbPath];
     
-    CDMCoreDataManager* cdm = [[CDMCoreDataManager alloc] init];
+    FMDatabase* database = [SQCDMigrationManager openDatabase];
+    
+    SQCDCoreDataManager* cdm = [[SQCDCoreDataManager alloc] initWithModelPath:momnPath outputDirectory:outputPath];
     NSManagedObjectContext* moc = [cdm managedObjectContext];
     
-    BOOL isTwoStep = NO;
-    
-//    [CDMMigrationManager testRelationship:moc];
-
-    [CDMMigrationManager migrateTableDataFromDatabase:database
+    [SQCDMigrationManager migrateTableDataFromDatabase:database
                                toManagedObjectContext:moc
-                                    withRelationships:!isTwoStep];
-    if (isTwoStep) {
-        [CDMMigrationManager addRelationshipsFromDatabase:database
-                               toManagedObjectContext:moc];
-    }
-    
-//    [CDMMigrationManager testRelationship:moc];
-    
+                                    withRelationships:YES];
+        
     [database close];
     
     return YES;
-}
-
-+ (void) testRelationship:(NSManagedObjectContext*) moc
-{
-    NSError* error;
-    NSLog(@"Testing inverse relationship...");
-    NSFetchRequest *albumFetchRequest = [[NSFetchRequest alloc] init];
-    [albumFetchRequest setEntity:
-    [NSEntityDescription entityForName:@"Genre" inManagedObjectContext:moc]];
-    [albumFetchRequest setPredicate: [NSPredicate predicateWithFormat:@"(genreid = 13)"]];
-    error = nil;
-    NSArray* albums = [moc executeFetchRequest:albumFetchRequest error:&error];
-    NSManagedObject* genre = [albums objectAtIndex:0] ;
-    NSArray* tracks = [genre valueForKeyPath:@"tracks"];
-    for (NSManagedObject* track in tracks) {
-        NSLog(@"Tracks in genere %@: %@", [genre valueForKey:@"name"], [track valueForKey:@"trackid"]);
-    }
 }
 
 #pragma mark - data and relationship migration
@@ -82,7 +55,7 @@
                toManagedObjectContext:(NSManagedObjectContext*) moc
                     withRelationships:(BOOL) migrateRelationships
 {
-    NSDictionary *tablesDict = [CDMMigrationManager tableDictionary];
+    NSDictionary *tablesDict = [SQCDMigrationManager tableDictionary];
     
     __block __weak NSError* error;
     
@@ -91,13 +64,13 @@
         
         if (![tableName isEqualToString:@"sqlite_sequence"] && [tableInfo shouldMigrate]){
             
-            NSLog(@"***************Started migration for table %@****************", tableInfo.sqliteName);
+            NSLog(@"***************  Started migration for table %@  ****************", tableInfo.sqliteName);
             
             FMResultSet *results = [database executeQuery:[NSString stringWithFormat:@"select * from %@", tableName]];
             
             while([results next]) {
                 // TODO ensure duplicates are not added
-                NSManagedObject *entity =  [CDMMigrationManager createEntityFromResultSet:results
+                NSManagedObject *entity =  [SQCDMigrationManager createEntityFromResultSet:results
                                                                             withTableInfo:tableInfo
                                                                    inManagedObjectContext:moc];
                 [moc save:&error];
@@ -109,7 +82,7 @@
                 }
             }
             
-            NSLog(@"***************Ended migration for table %@****************", tableInfo.sqliteName);
+            NSLog(@"***************  Ended migration for table %@  ****************", tableInfo.sqliteName);
 
         }
     }
@@ -121,31 +94,22 @@
 + (BOOL) addRelationshipsFromDatabase:(FMDatabase*) database
                toManagedObjectContext:(NSManagedObjectContext*) moc
 {    
-    NSDictionary *tablesDict = [CDMMigrationManager tableDictionary];
+    NSDictionary *tablesDict = [SQCDMigrationManager tableDictionary];
     
     __block __weak NSError* error;
     
-    NSArray* tableInfos = [tablesDict objectForKey:@"tableInfo"];
-    
     // Iterate each table
-    [tableInfos enumerateObjectsUsingBlock:^(NSDictionary* tableInfo, NSUInteger idx, BOOL *stop) {
+    [[tablesDict allValues] enumerateObjectsUsingBlock:^(SQCDTableInfo* tableInfo, NSUInteger idx, BOOL *stop) {
         
-        NSArray* foreignKeyInfo = [tableInfo objectForKey:@"foreignkeymap"];
+        NSArray* foreignKeyInfo = [tableInfo.foreignKeys allValues];
+        
         // Iterate over all foreign keys
-        [foreignKeyInfo enumerateObjectsUsingBlock:^(NSDictionary* relationInfo, NSUInteger idx, BOOL *stop) {
+        [foreignKeyInfo enumerateObjectsUsingBlock:^(SQCDForeignKeyInfo* relationInfo, NSUInteger idx, BOOL *stop) {
             
             NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
-            NSString* primaryPropertyName = [relationInfo valueForKey:@"primaryPropertyName"];
-            NSString* primaryColumnName = [relationInfo valueForKey:@"primaryColumnName"];
-            NSString* fromEntityName = [relationInfo valueForKey:@"fromEntityName"];
-            NSString* toEntityName = [relationInfo valueForKey:@"toEntityName"];
-            NSString* fromTableName = [relationInfo valueForKey:@"fromTableName"];
-            NSString* toPropertyName = [relationInfo valueForKey:@"toPropertyName"];
-            NSString* fromColumnName = [relationInfo valueForKey:@"fromColumnName"];
-            NSString* relationName = [relationInfo valueForKey:@"relationName"];
-            BOOL isToMany = [[relationInfo valueForKey:@"itToMany"] boolValue];
+            NSString* primaryPropertyName = [[tableInfo primaryColumn] nameForProperty];
             
-            [fetchRequest setEntity:[NSEntityDescription entityForName:fromEntityName inManagedObjectContext:moc]];
+            [fetchRequest setEntity:[NSEntityDescription entityForName:[relationInfo.fromSqliteTableName capitalizedString] inManagedObjectContext:moc]];
             [fetchRequest setSortDescriptors:@[[[NSSortDescriptor alloc] initWithKey:primaryPropertyName ascending:YES]]];
             error = nil;
             NSArray *fromEntities = [moc executeFetchRequest:fetchRequest error:&error];
@@ -154,17 +118,17 @@
                     // TODO should create appropriate object
                     int fromEntityId = [[fromEntity valueForKey:primaryPropertyName] intValue];
                     
-                    NSArray* toEntityIds = [CDMMigrationManager fetchValuesforColumnName:fromColumnName
-                                                                                 inTable:fromTableName
-                                                                          withPrimaryKey:primaryColumnName
+                    NSArray* toEntityIds = [SQCDMigrationManager fetchValuesforColumnName:relationInfo.fromSqliteColumnName
+                                                                                 inTable:relationInfo.fromSqliteTableName
+                                                                          withPrimaryKey:[tableInfo primaryColumn].sqliteName
                                                                                    value:fromEntityId];
                     
-                    error = [CDMMigrationManager setRelationshipForEntity:fromEntity
-                                                             toEntityName:toEntityName
-                                                           toPropertyName:toPropertyName
+                    error = [SQCDMigrationManager setRelationshipForEntity:fromEntity
+                                                             toEntityName:[relationInfo.toSqliteTableName capitalizedString]
+                                                           toPropertyName:[relationInfo nameForProperty:relationInfo.toSqliteColumnName]
                                                                toEntities:toEntityIds
-                                                         withRelationName:relationName
-                                                                 isTomany:isToMany
+                                                         withRelationName:relationInfo.relationName
+                                                                 isTomany:relationInfo.toMany
                                                    inManagedObjectContext:moc];
                 }
             }
@@ -254,7 +218,7 @@
     
     NSString *primaryProperty = [[tableInfo primaryColumn] nameForProperty];
     
-    NSArray* existingEntities = [CDMMigrationManager fetchEntity:entityName
+    NSArray* existingEntities = [SQCDMigrationManager fetchEntity:entityName
                                          primaryPropertyName:primaryProperty
                                         primaryPropertyValue:[results intForColumn:primaryProperty]
                                       inManagedObjectContext:moc];
@@ -313,7 +277,7 @@
     }
     
     if (entity != nil) {
-        [CDMMigrationManager createRelationshipForEntity:entity
+        [SQCDMigrationManager createRelationshipForEntity:entity
                                   inManagedObjectContext:moc
                                                tableInfo:tableInfo
                                                resultSet:results];
@@ -327,7 +291,7 @@
                           tableInfo:(SQCDTableInfo*) tableInfo
                           resultSet:(FMResultSet*) fromResultSet
 {
-    FMDatabase* database = [CDMMigrationManager openDatabase];
+    FMDatabase* database = [SQCDMigrationManager openDatabase];
     
     // Fetch all the related entries from the destination table
     NSArray* foreignKeyInfo = [tableInfo.foreignKeys allValues];
@@ -344,7 +308,7 @@
             BOOL isToMany = relationInfo.toMany;
             
             // Get the destination table info
-            NSDictionary *tablesDict = [CDMMigrationManager tableDictionary];
+            NSDictionary *tablesDict = [SQCDMigrationManager tableDictionary];
             SQCDTableInfo* toTableInfo = [tablesDict valueForKey:toTableName];
             
             // Fetch results from db and create entities
@@ -354,7 +318,7 @@
             while([results next]) {
                 NSLog(@"Creating Relation %@ form %@ to %@", relationName, fromEntity.entity.name, toEntityName);
 
-                NSManagedObject *relationEntity =  [CDMMigrationManager createEntityFromResultSet:results
+                NSManagedObject *relationEntity =  [SQCDMigrationManager createEntityFromResultSet:results
                                                                                     withTableInfo:toTableInfo
                                                                            inManagedObjectContext:moc];
                 [relationEntities addObject:relationEntity];
@@ -389,7 +353,7 @@
                        withPrimaryKey:(NSString*) primaryKey
                                 value:(int) primaryId
 {
-    FMDatabase* database = [CDMMigrationManager openDatabase];
+    FMDatabase* database = [SQCDMigrationManager openDatabase];
 
     FMResultSet *results = [database executeQuery:[NSString stringWithFormat:@"select %@ from %@ where %@=%d", columnName, tableName ,primaryKey, primaryId]];
     // Addd all ids to array
@@ -406,15 +370,7 @@
 
 + (FMDatabase *)openDatabase
 {
-//    NSFileManager *fm = [NSFileManager defaultManager];
-//    NSString *documents_dir = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
-//    NSString *db_path = [documents_dir stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.%@", DBNAME, DBEXTENSION]];
-//    NSString *template_path = [[NSBundle mainBundle] pathForResource:DBNAME ofType:DBEXTENSION];
-//    
-//    if (![fm fileExistsAtPath:db_path])
-//        [fm copyItemAtPath:template_path toPath:db_path error:nil];
-    NSString *db_path = [[@"/Users/adityad/Developer/ChinookDatabase1.4_Sqlite" stringByAppendingPathComponent:DBNAME] stringByAppendingPathExtension:DBEXTENSION];
-    FMDatabase *db = [FMDatabase databaseWithPath:db_path];
+    FMDatabase *db = [FMDatabase databaseWithPath:[SQCDMigrationManager dbPath:nil]];
     if (![db open])
         NSLog(@"Failed to open database!");
     return db;
@@ -426,8 +382,7 @@
     static dispatch_once_t pred;
     static NSDictionary* inverseDict = nil;
     dispatch_once(&pred, ^{
-        NSString *template_path = [[@"/Users/adityad/Developer/ChinookDatabase1.4_Sqlite" stringByAppendingPathComponent:DBNAME] stringByAppendingPathExtension:DBEXTENSION];
-        inverseDict = [SQCDDatabaseHelper fetchTableInfos:template_path];
+        inverseDict = [SQCDDatabaseHelper fetchTableInfos:[SQCDMigrationManager dbPath:nil]];
         if (inverseDict == nil) {
             NSLog(@"Could not initialize inverse dictionary");
         }
@@ -436,27 +391,18 @@
     return inverseDict;
 }
 
-+ (NSString*) nameForProperty:(NSString*) sqliteName
-                    tableName:(NSString*) tableName
++(NSString*) dbPath:(NSString*) _dbPath
 {
-    NSString* columnName = [sqliteName lowercaseString];
-    
-    if ([[columnName lowercaseString] isEqualToString:@"id"]) {
-        columnName = [[tableName lowercaseString] stringByAppendingFormat:@"_primary_%@", sqliteName];
-    }
-    
-    NSArray *components = [columnName componentsSeparatedByString:@"_"];
-    NSMutableString *output = [NSMutableString string];
-    
-    for (NSUInteger i = 0; i < components.count; i++) {
-        if (i == 0) {
-            [output appendString:components[i]];
-        } else {
-            [output appendString:[components[i] capitalizedString]];
+    static dispatch_once_t pathd;
+    static NSString* dbPath = nil;
+    dispatch_once(&pathd, ^{
+        dbPath  = _dbPath;
+        if (dbPath == nil) {
+            NSLog(@"Could not initialize db path");
         }
-    }
+    });
     
-    return [NSString stringWithString:output];
+    return dbPath;
 }
 
 @end

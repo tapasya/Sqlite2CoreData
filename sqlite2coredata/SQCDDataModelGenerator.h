@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
-@interface SQCDMigrationHelper : NSObject
+@interface SQCDDataModelGenerator : NSObject
 
 +(void) generateCoreDataModelFromDBPath:(NSString *)dbPath
                     outputDirectoryPath:(NSString*) outputPath

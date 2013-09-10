@@ -18,7 +18,10 @@
 
 @property (nonatomic, assign) NSString* sqliteTableName;
 
+- (NSString*) nameForProperty;
+#ifdef __MAC_OS_X_VERSION_MIN_REQUIRED
 -(NSXMLElement*) xmlRepresentation;
+#endif
 
 - (NSDictionary*) pListRepresentation;
 

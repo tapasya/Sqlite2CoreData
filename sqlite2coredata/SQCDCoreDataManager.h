@@ -9,16 +9,15 @@
 #import <Foundation/Foundation.h>
 #import <CoreData/CoreData.h>
 
-#define DATAMODELNAME @"ChinookSmall"
-#define DBNAME          @"ChinookSmall"
 #define DBEXTENSION     @"sqlite"
-#define PLIST_NAME      @"ChinookSmall"
 
-@interface CDMCoreDataManager : NSObject
+@interface SQCDCoreDataManager : NSObject
 {
     
 }
 
+-(id) initWithModelPath:(NSString*) momdPath
+        outputDirectory:(NSString*) outputPath;
 
 @property (readonly, strong, nonatomic) NSPersistentStoreCoordinator *persistentStoreCoordinator;
 @property (readonly, strong, nonatomic) NSManagedObjectModel *managedObjectModel;

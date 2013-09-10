@@ -7,8 +7,8 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "SQCDMigrationHelper.h"
-#import "CDMMigrationManager.h"
+#import "SQCDDataModelGenerator.h"
+#import "SQCDMigrationManager.h"
 
 int main(int argc, const char * argv[])
 {
@@ -28,7 +28,7 @@ int main(int argc, const char * argv[])
         NSString* outputPath = argc > 2 ? [[NSString stringWithUTF8String:argv[2]] stringByExpandingTildeInPath] : [dbPath stringByDeletingLastPathComponent];
         NSString* fileName = argc > 3 ? [[NSString stringWithUTF8String:argv[3]] stringByExpandingTildeInPath] : nil;
         
-        [SQCDMigrationHelper generateCoreDataModelFromDBPath:dbPath
+        [SQCDDataModelGenerator generateCoreDataModelFromDBPath:dbPath
                                          outputDirectoryPath:outputPath
                                                     fileName:fileName];
         
@@ -58,7 +58,9 @@ int main(int argc, const char * argv[])
         [task waitUntilExit];
         
         // migrate
-        [CDMMigrationManager startDataMigration];
+        [SQCDMigrationManager startDataMigrationWithDBPath:dbPath
+                                                  momdPath:momdPath
+                                                outputPath:outputPath];
         
     }
     return 0;

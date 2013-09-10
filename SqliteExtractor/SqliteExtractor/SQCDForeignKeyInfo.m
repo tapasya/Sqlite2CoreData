@@ -10,6 +10,9 @@
 
 @implementation SQCDForeignKeyInfo
 
+#ifdef __MAC_OS_X_VERSION_MIN_REQUIRED
+// Other kinds of Mac OS
+
 -(NSXMLElement*) xmlRepresentation
 {
     NSXMLElement* childAttr = (NSXMLElement*) [NSXMLNode elementWithName:@"relationship"];
@@ -34,10 +37,13 @@
         [childAttr addAttribute:[NSXMLNode attributeWithName:@"maxCount" stringValue:@"1"]];
     }
     
+    //TODO should handle 
     [childAttr addAttribute:[NSXMLNode attributeWithName:@"optional" stringValue:self.isInverse ? @"YES": @"NO"]];
     
     return childAttr;
 }
+
+#endif
 
 - (id) copyWithZone:(NSZone *)zone;
 {

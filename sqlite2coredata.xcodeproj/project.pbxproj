@@ -7,15 +7,15 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		84097C9017D496070095F854 /* SQCDPListGenerator.m in Sources */ = {isa = PBXBuildFile; fileRef = 84097C8F17D496070095F854 /* SQCDPListGenerator.m */; };
 		842CD18E17C4B24A000061FC /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 842CD18D17C4B24A000061FC /* Foundation.framework */; };
 		842CD19117C4B24A000061FC /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 842CD19017C4B24A000061FC /* main.m */; };
 		842CD19517C4B24A000061FC /* sqlite2coredata.1 in CopyFiles */ = {isa = PBXBuildFile; fileRef = 842CD19417C4B24A000061FC /* sqlite2coredata.1 */; };
 		842CD19C17C4B284000061FC /* libsqlite3.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 842CD19B17C4B284000061FC /* libsqlite3.0.dylib */; };
-		842CD1B217C4B90B000061FC /* SQCDMigrationHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 842CD1B117C4B90B000061FC /* SQCDMigrationHelper.m */; };
+		842CD1B217C4B90B000061FC /* SQCDDataModelGenerator.m in Sources */ = {isa = PBXBuildFile; fileRef = 842CD1B117C4B90B000061FC /* SQCDDataModelGenerator.m */; };
 		84D4BBEA17D9D974008D6A99 /* libSqliteExtractor.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 84D4BBE217D9D570008D6A99 /* libSqliteExtractor.a */; };
-		8820AABF17DF1C5A001D1695 /* CDMCoreDataManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 8820AABC17DF1C59001D1695 /* CDMCoreDataManager.m */; };
-		8820AAC017DF1C5A001D1695 /* CDMMigrationManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 8820AABE17DF1C5A001D1695 /* CDMMigrationManager.m */; };
+		84F498E517DF34FF0049A94F /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 84D4BB8D17D9D2BF008D6A99 /* CoreData.framework */; };
+		8820AABF17DF1C5A001D1695 /* SQCDCoreDataManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 8820AABC17DF1C59001D1695 /* SQCDCoreDataManager.m */; };
+		8820AAC017DF1C5A001D1695 /* SQCDMigrationManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 8820AABE17DF1C5A001D1695 /* SQCDMigrationManager.m */; };
 		8820AACC17DF1D1E001D1695 /* FMDatabase.m in Sources */ = {isa = PBXBuildFile; fileRef = 8820AAC317DF1D1E001D1695 /* FMDatabase.m */; };
 		8820AACD17DF1D1E001D1695 /* FMDatabaseAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 8820AAC517DF1D1E001D1695 /* FMDatabaseAdditions.m */; };
 		8820AACE17DF1D1E001D1695 /* FMDatabasePool.m in Sources */ = {isa = PBXBuildFile; fileRef = 8820AAC717DF1D1E001D1695 /* FMDatabasePool.m */; };
@@ -54,25 +54,23 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		84097C8E17D496070095F854 /* SQCDPListGenerator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SQCDPListGenerator.h; sourceTree = "<group>"; };
-		84097C8F17D496070095F854 /* SQCDPListGenerator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SQCDPListGenerator.m; sourceTree = "<group>"; };
 		842CD18A17C4B24A000061FC /* sqlite2coredata */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = sqlite2coredata; sourceTree = BUILT_PRODUCTS_DIR; };
 		842CD18D17C4B24A000061FC /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		842CD19017C4B24A000061FC /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		842CD19317C4B24A000061FC /* sqlite2coredata-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "sqlite2coredata-Prefix.pch"; sourceTree = "<group>"; };
 		842CD19417C4B24A000061FC /* sqlite2coredata.1 */ = {isa = PBXFileReference; lastKnownFileType = text.man; path = sqlite2coredata.1; sourceTree = "<group>"; };
 		842CD19B17C4B284000061FC /* libsqlite3.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.0.dylib; path = usr/lib/libsqlite3.0.dylib; sourceTree = SDKROOT; };
-		842CD1B017C4B90B000061FC /* SQCDMigrationHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SQCDMigrationHelper.h; sourceTree = "<group>"; };
-		842CD1B117C4B90B000061FC /* SQCDMigrationHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SQCDMigrationHelper.m; sourceTree = "<group>"; };
+		842CD1B017C4B90B000061FC /* SQCDDataModelGenerator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SQCDDataModelGenerator.h; sourceTree = "<group>"; };
+		842CD1B117C4B90B000061FC /* SQCDDataModelGenerator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SQCDDataModelGenerator.m; sourceTree = "<group>"; };
 		84D4BB8917D9D2BF008D6A99 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		84D4BB8C17D9D2BF008D6A99 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
 		84D4BB8D17D9D2BF008D6A99 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
 		84D4BB8E17D9D2BF008D6A99 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		84D4BBDD17D9D570008D6A99 /* SqliteExtractor.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = SqliteExtractor.xcodeproj; path = SqliteExtractor/SqliteExtractor.xcodeproj; sourceTree = "<group>"; };
-		8820AABB17DF1C59001D1695 /* CDMCoreDataManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDMCoreDataManager.h; sourceTree = "<group>"; };
-		8820AABC17DF1C59001D1695 /* CDMCoreDataManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDMCoreDataManager.m; sourceTree = "<group>"; };
-		8820AABD17DF1C59001D1695 /* CDMMigrationManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDMMigrationManager.h; sourceTree = "<group>"; };
-		8820AABE17DF1C5A001D1695 /* CDMMigrationManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDMMigrationManager.m; sourceTree = "<group>"; };
+		8820AABB17DF1C59001D1695 /* SQCDCoreDataManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SQCDCoreDataManager.h; sourceTree = "<group>"; };
+		8820AABC17DF1C59001D1695 /* SQCDCoreDataManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SQCDCoreDataManager.m; sourceTree = "<group>"; };
+		8820AABD17DF1C59001D1695 /* SQCDMigrationManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SQCDMigrationManager.h; sourceTree = "<group>"; };
+		8820AABE17DF1C5A001D1695 /* SQCDMigrationManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SQCDMigrationManager.m; sourceTree = "<group>"; };
 		8820AAC217DF1D1E001D1695 /* FMDatabase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FMDatabase.h; sourceTree = "<group>"; };
 		8820AAC317DF1D1E001D1695 /* FMDatabase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FMDatabase.m; sourceTree = "<group>"; };
 		8820AAC417DF1D1E001D1695 /* FMDatabaseAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FMDatabaseAdditions.h; sourceTree = "<group>"; };
@@ -90,6 +88,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				84F498E517DF34FF0049A94F /* CoreData.framework in Frameworks */,
 				84D4BBEA17D9D974008D6A99 /* libSqliteExtractor.a in Frameworks */,
 				842CD19C17C4B284000061FC /* libsqlite3.0.dylib in Frameworks */,
 				842CD18E17C4B24A000061FC /* Foundation.framework in Frameworks */,
@@ -132,14 +131,12 @@
 			isa = PBXGroup;
 			children = (
 				842CD19017C4B24A000061FC /* main.m */,
-				842CD1B017C4B90B000061FC /* SQCDMigrationHelper.h */,
-				842CD1B117C4B90B000061FC /* SQCDMigrationHelper.m */,
-				84097C8E17D496070095F854 /* SQCDPListGenerator.h */,
-				84097C8F17D496070095F854 /* SQCDPListGenerator.m */,
-				8820AABB17DF1C59001D1695 /* CDMCoreDataManager.h */,
-				8820AABC17DF1C59001D1695 /* CDMCoreDataManager.m */,
-				8820AABD17DF1C59001D1695 /* CDMMigrationManager.h */,
-				8820AABE17DF1C5A001D1695 /* CDMMigrationManager.m */,
+				842CD1B017C4B90B000061FC /* SQCDDataModelGenerator.h */,
+				842CD1B117C4B90B000061FC /* SQCDDataModelGenerator.m */,
+				8820AABB17DF1C59001D1695 /* SQCDCoreDataManager.h */,
+				8820AABC17DF1C59001D1695 /* SQCDCoreDataManager.m */,
+				8820AABD17DF1C59001D1695 /* SQCDMigrationManager.h */,
+				8820AABE17DF1C5A001D1695 /* SQCDMigrationManager.m */,
 				8820AAC117DF1D1E001D1695 /* fmdb */,
 				842CD19417C4B24A000061FC /* sqlite2coredata.1 */,
 				842CD19217C4B24A000061FC /* Supporting Files */,
@@ -259,10 +256,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				842CD19117C4B24A000061FC /* main.m in Sources */,
-				842CD1B217C4B90B000061FC /* SQCDMigrationHelper.m in Sources */,
-				84097C9017D496070095F854 /* SQCDPListGenerator.m in Sources */,
-				8820AABF17DF1C5A001D1695 /* CDMCoreDataManager.m in Sources */,
-				8820AAC017DF1C5A001D1695 /* CDMMigrationManager.m in Sources */,
+				842CD1B217C4B90B000061FC /* SQCDDataModelGenerator.m in Sources */,
+				8820AABF17DF1C5A001D1695 /* SQCDCoreDataManager.m in Sources */,
+				8820AAC017DF1C5A001D1695 /* SQCDMigrationManager.m in Sources */,
 				8820AACC17DF1D1E001D1695 /* FMDatabase.m in Sources */,
 				8820AACD17DF1D1E001D1695 /* FMDatabaseAdditions.m in Sources */,
 				8820AACE17DF1D1E001D1695 /* FMDatabasePool.m in Sources */,

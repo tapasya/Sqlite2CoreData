@@ -6,14 +6,13 @@
 //  Copyright (c) 2013 Tapasya. All rights reserved.
 //
 
-#import "SQCDMigrationHelper.h"
-#import "SQCDPListGenerator.h"
+#import "SQCDDataModelGenerator.h"
 
 #define kXCDataModelDExtention   @"xcdatamodeld"
 #define kXCDataModelExtention    @"xcdatamodel"
 #define kXCDContents             @"contents"
 
-@implementation SQCDMigrationHelper
+@implementation SQCDDataModelGenerator
 
 +(void) generateCoreDataModelFromDBPath:(NSString *)dbPath
                     outputDirectoryPath:(NSString*) outputPath
@@ -72,9 +71,7 @@
     isCreated ? NSLog(@"Data model succesfully generated at %@ with name %@", outputPath, fileName): NSLog(@"Data model generation failed");
     
     if (isCreated) {
-        NSString* plistPath = [outputPath stringByAppendingFormat:@"/%@.plist", fileName];
-        isCreated = [SQCDPListGenerator generatePListAtPath:plistPath forTableInfos:tableInfos];
-        
+        NSString* plistPath = [outputPath stringByAppendingFormat:@"/%@.plist", fileName];        
         isCreated ? NSLog(@"Plist succesfully generated at %@ with name %@", plistPath, fileName): NSLog(@"Plist generation failed");
 
     }

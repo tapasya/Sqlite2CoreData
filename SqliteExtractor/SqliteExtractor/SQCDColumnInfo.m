@@ -11,6 +11,7 @@
 
 @implementation SQCDColumnInfo
 
+#ifdef __MAC_OS_X_VERSION_MIN_REQUIRED
 - (NSXMLElement*) xmlRepresentation
 {
     NSXMLElement* childAttr = (NSXMLElement*) [NSXMLNode elementWithName:@"attribute"];
@@ -21,6 +22,7 @@
     
     return childAttr;
 }
+#endif
 
 - (NSString*) nameForProperty
 {

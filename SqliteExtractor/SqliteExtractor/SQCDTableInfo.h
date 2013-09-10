@@ -7,6 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "SQCDColumnInfo.h"
 
 @interface SQCDTableInfo : NSObject
 
@@ -18,8 +19,15 @@
 
 @property (nonatomic, strong) NSDictionary* foreignKeys;
 
--(NSXMLElement*) xmlRepresentation;
+- (NSString*) representedClassName;
 
+- (SQCDColumnInfo*) primaryColumn;
+
+- (BOOL) shouldMigrate;
+
+#ifdef __MAC_OS_X_VERSION_MIN_REQUIRED
+-(NSXMLElement*) xmlRepresentation;
+#endif
 - (NSDictionary*) pListRepresentation;
 
 @end

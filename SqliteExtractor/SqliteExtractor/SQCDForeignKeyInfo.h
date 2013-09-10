@@ -19,8 +19,12 @@
 @property (nonatomic, assign) BOOL toMany;
 @property (nonatomic, assign) BOOL isInverse;
 
+#ifdef __MAC_OS_X_VERSION_MIN_REQUIRED
 -(NSXMLElement*) xmlRepresentation;
+#endif
 
 - (NSDictionary*) pListRepresentation;
+
+- (NSString*) nameForProperty:(NSString*) columnName;
 
 @end

@@ -13,6 +13,7 @@
 
 @implementation SQCDTableInfo
 
+#ifdef __MAC_OS_X_VERSION_MIN_REQUIRED
 -(NSXMLElement*) xmlRepresentation
 {
     // Add an entity
@@ -44,6 +45,7 @@
     
     return entity;
 }
+#endif
 
 - (NSString*) representedClassName
 {
@@ -96,6 +98,29 @@
     }
     
     return tablePlistDict;
+}
+
+- (SQCDColumnInfo*) primaryColumn
+{
+    for (SQCDColumnInfo* columnInfo in [self.columns allValues]) {
+        if (columnInfo.isPrimaryKey) {
+            return columnInfo;
+        }
+    }
+    return nil;
+}
+
+-(BOOL) shouldMigrate
+{
+    for (SQCDColumnInfo* colunmInfo in [self.columns allValues]) {
+        SQCDForeignKeyInfo* foreignKeyInfo = [self.foreignKeys valueForKey:colunmInfo.sqliteName];
+        if (!(foreignKeyInfo != nil && ![foreignKeyInfo.toSqliteTableName isEqualToString:self.sqliteName])) {
+            // Found valid column
+            return YES;
+        }
+    }
+    
+    return NO;
 }
 
 @end

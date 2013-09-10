@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDESourceControlProjectIdentifier</key>
+	<string>D35E6CAD-F1BF-401A-ADE7-5B63710C919C</string>
+	<key>IDESourceControlProjectName</key>
+	<string>sqlite2coredata</string>
+	<key>IDESourceControlProjectOriginsDictionary</key>
+	<dict>
+		<key>EA30404A-B9BF-49E0-8917-85B5880309ED</key>
+		<string>https://bitbucket.org/tapasya/sqlite2coredata.git</string>
+	</dict>
+	<key>IDESourceControlProjectPath</key>
+	<string>sqlite2coredata.xcodeproj/project.xcworkspace</string>
+	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
+	<dict>
+		<key>EA30404A-B9BF-49E0-8917-85B5880309ED</key>
+		<string>../..</string>
+	</dict>
+	<key>IDESourceControlProjectURL</key>
+	<string>https://bitbucket.org/tapasya/sqlite2coredata.git</string>
+	<key>IDESourceControlProjectVersion</key>
+	<integer>110</integer>
+	<key>IDESourceControlProjectWCCIdentifier</key>
+	<string>EA30404A-B9BF-49E0-8917-85B5880309ED</string>
+	<key>IDESourceControlProjectWCConfigurations</key>
+	<array>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>EA30404A-B9BF-49E0-8917-85B5880309ED</string>
+			<key>IDESourceControlWCCName</key>
+			<string>sqlite2coredata</string>
+		</dict>
+	</array>
+</dict>
+</plist>
