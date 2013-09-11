@@ -14,7 +14,7 @@
 
 @implementation SQCDDataModelGenerator
 
-+(void) generateCoreDataModelFromDBPath:(NSString *)dbPath
++(BOOL) generateCoreDataModelFromDBPath:(NSString *)dbPath
                     outputDirectoryPath:(NSString*) outputPath
                                fileName:(NSString*) fileName
 {        
@@ -36,7 +36,11 @@
     [xmlDoc setStandalone:YES];
     
     NSDictionary* tableInfos = [SQCDDatabaseHelper fetchTableInfos:dbPath];
-
+    if (tableInfos == nil) {
+        NSLog(@"No table information could be extracted from database %@",dbPath);
+        return NO;
+    }
+    
     for (SQCDTableInfo *tableInfo in [tableInfos allValues]) {
         NSLog(@"Generating xml for table '%@'",tableInfo.sqliteName);
         NSXMLElement* tableEntity = [tableInfo xmlRepresentation];
@@ -70,10 +74,6 @@
     
     isCreated ? NSLog(@"Data model succesfully generated at %@ with name %@", outputPath, fileName): NSLog(@"Data model generation failed");
     
-    if (isCreated) {
-        NSString* plistPath = [outputPath stringByAppendingFormat:@"/%@.plist", fileName];        
-        isCreated ? NSLog(@"Plist succesfully generated at %@ with name %@", plistPath, fileName): NSLog(@"Plist generation failed");
-
-    }
+    return isCreated;
 }
 @end

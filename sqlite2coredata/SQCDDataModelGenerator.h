@@ -10,7 +10,7 @@
 
 @interface SQCDDataModelGenerator : NSObject
 
-+(void) generateCoreDataModelFromDBPath:(NSString *)dbPath
++(BOOL) generateCoreDataModelFromDBPath:(NSString *)dbPath
                     outputDirectoryPath:(NSString*) outputPath
                                fileName:(NSString*) fileName;
 @end

@@ -25,12 +25,15 @@ int main(int argc, const char * argv[])
         }
         
         NSString* dbPath = [[NSString stringWithUTF8String:argv[1]] stringByExpandingTildeInPath];
-        NSString* outputPath = argc > 2 ? [[NSString stringWithUTF8String:argv[2]] stringByExpandingTildeInPath] : [dbPath stringByDeletingLastPathComponent];
+        NSString* outputPath = argc > 2 ? [[NSString stringWithUTF8String:argv[2]] stringByExpandingTildeInPath] : [[dbPath stringByDeletingLastPathComponent] stringByAppendingPathComponent:@"output"];
         NSString* fileName = argc > 3 ? [[NSString stringWithUTF8String:argv[3]] stringByExpandingTildeInPath] : nil;
         
-        [SQCDDataModelGenerator generateCoreDataModelFromDBPath:dbPath
+        BOOL xcModelGenerated = [SQCDDataModelGenerator generateCoreDataModelFromDBPath:dbPath
                                          outputDirectoryPath:outputPath
                                                     fileName:fileName];
+        if (!xcModelGenerated) {
+            return -1;
+        }
         
         // compile the xcdatamodeld
         if ([fileName length] == 0) {
@@ -45,14 +48,12 @@ int main(int argc, const char * argv[])
         [argsArr addObject:xcModelPath];
         [argsArr addObject:momdPath];
         [task setArguments:argsArr];
-        [task setTerminationHandler:^(NSTask *aTask) {
-            int status = [aTask terminationStatus];
-            if (status != 0) {
-                NSLog(@"Task ended with status %d. Reason: %ld",status,[aTask terminationReason]);
-            }
-        }];
         [task launch];
-        [task waitUntilExit];
+        [task waitUntilExit];        
+        if ([task terminationReason] != NSTaskTerminationReasonExit) {
+            NSLog(@"xcdatamodel compilation failed with status %d",[task terminationStatus]);
+            return -1;
+        }
         
         // migrate
         [SQCDMigrationManager startDataMigrationWithDBPath:dbPath
