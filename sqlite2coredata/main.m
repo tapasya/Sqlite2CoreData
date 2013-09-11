@@ -36,6 +36,7 @@ int main(int argc, const char * argv[])
         }
         
         // compile the xcdatamodeld
+        NSLog(@"Compiling xcdatamodel...");
         if ([fileName length] == 0) {
             fileName = [[dbPath lastPathComponent] stringByDeletingPathExtension];
         }
@@ -54,6 +55,7 @@ int main(int argc, const char * argv[])
             NSLog(@"xcdatamodel compilation failed with status %d",[task terminationStatus]);
             return -1;
         }
+        NSLog(@"xcdatamodel compiled successfully");
         
         // migrate
         [SQCDMigrationManager startDataMigrationWithDBPath:dbPath
