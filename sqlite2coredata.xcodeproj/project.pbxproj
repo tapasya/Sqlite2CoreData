@@ -54,7 +54,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		842CD18A17C4B24A000061FC /* sqlite2coredata */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = sqlite2coredata; sourceTree = BUILT_PRODUCTS_DIR; };
+		842CD18A17C4B24A000061FC /* sqlite2coredata */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; name = sqlite2coredata; path = Sqlite2CoreData; sourceTree = BUILT_PRODUCTS_DIR; };
 		842CD18D17C4B24A000061FC /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		842CD19017C4B24A000061FC /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		842CD19317C4B24A000061FC /* sqlite2coredata-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "sqlite2coredata-Prefix.pch"; sourceTree = "<group>"; };
@@ -101,7 +101,7 @@
 		842CD18117C4B24A000061FC = {
 			isa = PBXGroup;
 			children = (
-				842CD18F17C4B24A000061FC /* sqlite2coredata */,
+				842CD18F17C4B24A000061FC /* Classes */,
 				842CD18C17C4B24A000061FC /* Frameworks */,
 				842CD18B17C4B24A000061FC /* Products */,
 				84D4BBDD17D9D570008D6A99 /* SqliteExtractor.xcodeproj */,
@@ -127,7 +127,7 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		842CD18F17C4B24A000061FC /* sqlite2coredata */ = {
+		842CD18F17C4B24A000061FC /* Classes */ = {
 			isa = PBXGroup;
 			children = (
 				842CD19017C4B24A000061FC /* main.m */,
@@ -141,6 +141,7 @@
 				842CD19417C4B24A000061FC /* sqlite2coredata.1 */,
 				842CD19217C4B24A000061FC /* Supporting Files */,
 			);
+			name = Classes;
 			path = sqlite2coredata;
 			sourceTree = "<group>";
 		};
@@ -217,7 +218,7 @@
 				LastUpgradeCheck = 0460;
 				ORGANIZATIONNAME = Tapasya;
 			};
-			buildConfigurationList = 842CD18517C4B24A000061FC /* Build configuration list for PBXProject "sqlite2coredata" */;
+			buildConfigurationList = 842CD18517C4B24A000061FC /* Build configuration list for PBXProject "Sqlite2CoreData" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
@@ -372,7 +373,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		842CD18517C4B24A000061FC /* Build configuration list for PBXProject "sqlite2coredata" */ = {
+		842CD18517C4B24A000061FC /* Build configuration list for PBXProject "Sqlite2CoreData" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				842CD19617C4B24A000061FC /* Debug */,

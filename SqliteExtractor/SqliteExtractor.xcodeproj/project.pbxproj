@@ -64,7 +64,7 @@
 		84D4BB9817D9D37C008D6A99 = {
 			isa = PBXGroup;
 			children = (
-				84D4BBAA17D9D37C008D6A99 /* SqliteExtractor */,
+				84D4BBAA17D9D37C008D6A99 /* Classes */,
 				84D4BBA317D9D37C008D6A99 /* Frameworks */,
 				84D4BBA217D9D37C008D6A99 /* Products */,
 			);
@@ -97,7 +97,7 @@
 			name = "Other Frameworks";
 			sourceTree = "<group>";
 		};
-		84D4BBAA17D9D37C008D6A99 /* SqliteExtractor */ = {
+		84D4BBAA17D9D37C008D6A99 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
 				84D4BBE617D9D625008D6A99 /* SqliteExtractor.h */,
@@ -117,6 +117,7 @@
 				84D4BBC217D9D3C5008D6A99 /* SQCDTypeMapper.m */,
 				84D4BBAB17D9D37C008D6A99 /* Supporting Files */,
 			);
+			name = Classes;
 			path = SqliteExtractor;
 			sourceTree = "<group>";
 		};
