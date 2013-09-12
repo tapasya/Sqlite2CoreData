@@ -54,7 +54,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		842CD18A17C4B24A000061FC /* sqlite2coredata */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; name = sqlite2coredata; path = Sqlite2CoreData; sourceTree = BUILT_PRODUCTS_DIR; };
+		842CD18A17C4B24A000061FC /* sqlite2coredata */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = sqlite2coredata; sourceTree = BUILT_PRODUCTS_DIR; };
 		842CD18D17C4B24A000061FC /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		842CD19017C4B24A000061FC /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		842CD19317C4B24A000061FC /* sqlite2coredata-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "sqlite2coredata-Prefix.pch"; sourceTree = "<group>"; };
