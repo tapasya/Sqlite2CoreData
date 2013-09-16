@@ -4,6 +4,8 @@
 Sqlite2CoreData is a command line tool to migrate the Sqlite database to to Core Data compatible database. It generates the Datamodel file and Core Data Sqlite file which can be imported to Mac/iOS projects and used with Core Data. 
 Main purpose of the tool is to ease the migration process. It generates Datamodel by creating entities based on the table schema. Foreign Key information is used to generate the relationship information.
 
+For more details and sample usage visit the [blog post](http://blog.imaginea.com/migrating-sqlite-to-core-data/)
+
 ## What it is?
 - Command line Tool
 - Xcdatamodeld Generator
