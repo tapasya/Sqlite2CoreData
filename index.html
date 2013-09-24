@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link href='https://fonts.googleapis.com/css?family=Architects+Daughter' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="stylesheets/pygment_trac.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print" />
+
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+    <title>Sqlite2coredata by tapasya</title>
+  </head>
+
+  <body>
+    <header>
+      <div class="inner">
+        <h1>Sqlite2coredata</h1>
+        <h2>Tool to migrate Standard Sqlite Database to Core Data</h2>
+        <a href="https://github.com/tapasya/Sqlite2CoreData" class="button"><small>View project on</small>GitHub</a>
+      </div>
+    </header>
+
+    <div id="content-wrapper">
+      <div class="inner clearfix">
+        <section id="main-content">
+          <h1>
+<a name="sqlite2coredata" class="anchor" href="#sqlite2coredata"><span class="octicon octicon-link"></span></a>Sqlite2Coredata</h1>
+
+<p><strong>Tool to migrate Standard Sqlite Database to Core Data</strong></p>
+
+<p>Sqlite2CoreData is a command line tool to migrate the Sqlite database to to Core Data compatible database. It generates the Datamodel file and Core Data Sqlite file which can be imported to Mac/iOS projects and used with Core Data. 
+Main purpose of the tool is to ease the migration process. It generates Datamodel by creating entities based on the table schema. Foreign Key information is used to generate the relationship information.</p>
+
+<p>For more details and sample usage visit the <a href="http://blog.imaginea.com/migrating-sqlite-to-core-data/">blog post</a></p>
+
+<h2>
+<a name="what-it-is" class="anchor" href="#what-it-is"><span class="octicon octicon-link"></span></a>What it is?</h2>
+
+<ul>
+<li>Command line Tool</li>
+<li>Xcdatamodeld Generator</li>
+<li>Data Migrator to Core Data compatible Sqlite</li>
+</ul><h2>
+<a name="what-it-is-not" class="anchor" href="#what-it-is-not"><span class="octicon octicon-link"></span></a>What it is not?</h2>
+
+<ul>
+<li><del>Core Data Version Updater</del></li>
+<li><del>Core Data Replacement</del></li>
+<li><del>Wrapper for Core Data</del></li>
+</ul><h2>
+<a name="usage" class="anchor" href="#usage"><span class="octicon octicon-link"></span></a>Usage</h2>
+
+<h3>
+<a name="command-line" class="anchor" href="#command-line"><span class="octicon octicon-link"></span></a>Command Line</h3>
+
+<ol>
+<li>Download the distribution.zip folder and extract</li>
+<li>From terminal browse to the extracted folder</li>
+<li>Run <code>./sqlite2coredata "path_to_database_file"</code>
+</li>
+</ol><h3>
+<a name="xcode" class="anchor" href="#xcode"><span class="octicon octicon-link"></span></a>XCode</h3>
+
+<ol>
+<li>Clone the repository </li>
+<li>Open <code>Sqlite2CoreData.xcodeproj</code> file</li>
+<li>Select Edit Schema and select Arguments tab</li>
+<li>Specify the path to the database</li>
+</ol><p>Output Files are saved to a folder named Output in the same directory containing the input database</p>
+
+<h2>
+<a name="requirements" class="anchor" href="#requirements"><span class="octicon octicon-link"></span></a>Requirements</h2>
+
+<ul>
+<li>Mac OSX 10.7+</li>
+<li>Xcode 4+</li>
+<li>Xcode Command Line Tools</li>
+</ul><h2>
+<a name="next-steps" class="anchor" href="#next-steps"><span class="octicon octicon-link"></span></a>Next Steps</h2>
+
+<p>Next up for <code>Sqlite2CoreData</code> are the following:</p>
+
+<ul>
+<li>Migrating many to many relationships</li>
+<li>Migrating up the referential constraints</li>
+<li>Optimizing setting up relationships</li>
+</ul><h2>
+<a name="credits" class="anchor" href="#credits"><span class="octicon octicon-link"></span></a>Credits</h2>
+
+<ul>
+<li>
+<a href="https://github.com/ccgus/fmdb">FMDB</a> is being used for Sqlite Interactions.</li>
+<li>
+<a href="https://github.com/adamelliot/Inflections">Infections</a> is used to generate Relationship names based on foreign key info</li>
+</ul><h2>
+<a name="creators" class="anchor" href="#creators"><span class="octicon octicon-link"></span></a>Creators</h2>
+
+<ul>
+<li>
+<a href="http://github.com/tapasya">Tapasya</a><br>
+</li>
+<li>
+<a href="http://github.com/adienthu">Aditya</a><br>
+</li>
+</ul><h2>
+<a name="license" class="anchor" href="#license"><span class="octicon octicon-link"></span></a>License</h2>
+
+<p>Sqlite2CoreData is available under the MIT license. See the LICENSE file for more info.</p>
+        </section>
+
+        <aside id="sidebar">
+          <a href="https://github.com/tapasya/Sqlite2CoreData/zipball/master" class="button">
+            <small>Download</small>
+            .zip file
+          </a>
+          <a href="https://github.com/tapasya/Sqlite2CoreData/tarball/master" class="button">
+            <small>Download</small>
+            .tar.gz file
+          </a>
+
+          <p class="repo-owner"><a href="https://github.com/tapasya/Sqlite2CoreData"></a> is maintained by <a href="https://github.com/tapasya">tapasya</a>.</p>
+
+          <p>This page was generated by <a href="pages.github.com">GitHub Pages</a> using the Architect theme by <a href="https://twitter.com/jasonlong">Jason Long</a>.</p>
+        </aside>
+      </div>
+    </div>
+
+  
+  </body>
+</html>
