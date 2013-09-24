@@ -10,6 +10,15 @@
 
 @implementation SQCDForeignKeyInfo
 
+- (id) init
+{
+    self = [super init];
+    if (self) {
+        self.isOptional = NO;
+    }
+    return self;
+}
+
 #ifdef __MAC_OS_X_VERSION_MIN_REQUIRED
 // Other kinds of Mac OS
 
@@ -31,14 +40,18 @@
     [childAttr addAttribute:[NSXMLNode attributeWithName:@"syncable" stringValue:@"YES"]];
     
     // TODO should set based on optional parameter
-    [childAttr addAttribute:[NSXMLNode attributeWithName:@"minCount" stringValue:@"1"]];
+    if (self.isOptional) {
+        [childAttr addAttribute:[NSXMLNode attributeWithName:@"minCount" stringValue:@"0"]];
+    } else{
+        [childAttr addAttribute:[NSXMLNode attributeWithName:@"minCount" stringValue:@"1"]];
+    }
     
     if (!self.toMany) {
         [childAttr addAttribute:[NSXMLNode attributeWithName:@"maxCount" stringValue:@"1"]];
     }
     
     //TODO should handle 
-    [childAttr addAttribute:[NSXMLNode attributeWithName:@"optional" stringValue:self.isInverse ? @"YES": @"NO"]];
+    [childAttr addAttribute:[NSXMLNode attributeWithName:@"optional" stringValue:self.isInverse || self.isOptional ? @"YES": @"NO"]];
     
     return childAttr;
 }

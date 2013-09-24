@@ -18,6 +18,8 @@
 @property (nonatomic, strong) NSString* invRelationName;
 @property (nonatomic, assign) BOOL toMany;
 @property (nonatomic, assign) BOOL isInverse;
+@property (nonatomic, assign) BOOL isOptional;
+
 
 #ifdef __MAC_OS_X_VERSION_MIN_REQUIRED
 -(NSXMLElement*) xmlRepresentation;

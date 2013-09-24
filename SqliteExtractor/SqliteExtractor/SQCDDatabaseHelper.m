@@ -13,6 +13,7 @@
 
 + (NSDictionary*) fetchTableInfos:(NSString*) dbPath
 {
+    
     sqlite3*            _db;
     
     int err = sqlite3_open([dbPath fileSystemRepresentation], &_db );
@@ -58,11 +59,46 @@
         sqlite3_finalize(statement);
         sqlite3_close(_db);
         
+        [SQCDDatabaseHelper generateManyToManyInfo:tableInfos];
+        
         return tableInfos;
     }
     
     return nil;
     
+}
+
++ (void) generateManyToManyInfo:(NSDictionary*) tablesDict
+{
+    [[SQCDDatabaseHelper manyToManyRelationships] removeAllObjects];
+    
+    NSArray* inverseRelations = [[SQCDDatabaseHelper inverseRelationships] allValues];
+    
+    for (NSArray* inverseRelationForTable in inverseRelations ) {
+        for (SQCDForeignKeyInfo* inverseInfo in inverseRelationForTable) {
+            
+            SQCDTableInfo* sourceTableInfo = [tablesDict objectForKey:inverseInfo.toSqliteTableName];
+            
+            if ([sourceTableInfo isManyToMany]) {
+                
+                NSArray* foreignKeys = [sourceTableInfo.foreignKeys allValues];
+                
+                SQCDForeignKeyInfo* otherForeignKey = [[[foreignKeys objectAtIndex:0] toSqliteTableName] isEqualToString:inverseInfo.fromSqliteTableName] ? [foreignKeys objectAtIndex:1] : [foreignKeys objectAtIndex:0];
+                
+                // Add relationship to the actual entity instead of the non existent many to many entity
+                SQCDForeignKeyInfo* manyToManyRelation = [inverseInfo copy];
+                manyToManyRelation.isInverse = NO;
+                manyToManyRelation.toMany = YES;
+                manyToManyRelation.fromSqliteTableName = inverseInfo.fromSqliteTableName;
+                manyToManyRelation.toSqliteTableName = otherForeignKey.toSqliteTableName;
+                manyToManyRelation.relationName = [[[manyToManyRelation.toSqliteTableName underscore ] pluralize] camelizeWithLowerFirstLetter];
+                manyToManyRelation.invRelationName = [[[manyToManyRelation.fromSqliteTableName underscore ] pluralize] camelizeWithLowerFirstLetter];
+                manyToManyRelation.isOptional = YES;
+                [SQCDDatabaseHelper addManyToManyRelation:manyToManyRelation forKey:sourceTableInfo.sqliteName];
+            }
+        }
+    }
+
 }
 
 + (NSDictionary*) allForeignKeysInTableNamed:(NSString*)tableName inDatabase:(sqlite3*) db
@@ -214,6 +250,41 @@
     
     [[SQCDDatabaseHelper inverseRelationships] setValue:inverseRelationForTable forKey:invForeignKeyInfo.fromSqliteTableName];
 }
+
++ (void) addManyToManyRelation:(SQCDForeignKeyInfo*) manyToManyInfo forKey:(NSString*) key
+{
+    NSMutableDictionary* m2mForTable = [[SQCDDatabaseHelper manyToManyRelationships] valueForKey:manyToManyInfo.fromSqliteTableName];
+    if (nil == m2mForTable) {
+        m2mForTable = [NSMutableDictionary dictionary];
+    }
+    
+    [m2mForTable setObject:manyToManyInfo forKey:key];
+    
+    [[SQCDDatabaseHelper manyToManyRelationships] setValue:m2mForTable forKey:manyToManyInfo.fromSqliteTableName];
+}
+
++(SQCDForeignKeyInfo*) manyToManyRelationFromTable:(NSString *)fromTableName toTable:(NSString *)toTableName
+{
+    NSDictionary* m2mInfo = [[SQCDDatabaseHelper manyToManyRelationships] valueForKey:fromTableName];
+    
+    return [m2mInfo objectForKey:toTableName];
+
+}
+
++(NSMutableDictionary*) manyToManyRelationships
+{
+    static dispatch_once_t tableToken;
+    static NSMutableDictionary* tablesDict = nil;
+    dispatch_once(&tableToken, ^{
+        tablesDict = [NSMutableDictionary dictionary];
+        if (tablesDict == nil) {
+            NSLog(@"Could not initialize inverse dictionary");
+        }
+    });
+    
+    return tablesDict;
+}
+
 
 +(NSMutableDictionary*) inverseRelationships
 {

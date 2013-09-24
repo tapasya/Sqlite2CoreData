@@ -11,6 +11,8 @@
 #import "SQCDForeignKeyInfo.h"
 #import "SQCDDatabaseHelper.h"
 
+#import "NSString+Inflections.h"
+
 @implementation SQCDTableInfo
 
 #ifdef __MAC_OS_X_VERSION_MIN_REQUIRED
@@ -38,7 +40,12 @@
     NSMutableArray* inverseRelationForTable = [[SQCDDatabaseHelper inverseRelationships] valueForKey:self.sqliteName];
     
     for (SQCDForeignKeyInfo* inverseInfo in inverseRelationForTable) {
-        if (![inverseInfo.toSqliteTableName isEqualToString:inverseInfo.fromSqliteTableName]) {
+        
+        SQCDForeignKeyInfo* manyToManyRelation = [SQCDDatabaseHelper manyToManyRelationFromTable:self.sqliteName
+                                                                                         toTable:inverseInfo.toSqliteTableName];
+        if (manyToManyRelation != nil) {
+            [entity addChild:[manyToManyRelation xmlRepresentation]];
+        }else if (![inverseInfo.toSqliteTableName isEqualToString:inverseInfo.fromSqliteTableName]) {
             [entity addChild:[inverseInfo xmlRepresentation]];
         }
     }
@@ -110,17 +117,17 @@
     return nil;
 }
 
--(BOOL) shouldMigrate
+-(BOOL) isManyToMany
 {
     for (SQCDColumnInfo* colunmInfo in [self.columns allValues]) {
         SQCDForeignKeyInfo* foreignKeyInfo = [self.foreignKeys valueForKey:colunmInfo.sqliteName];
         if (!(foreignKeyInfo != nil && ![foreignKeyInfo.toSqliteTableName isEqualToString:self.sqliteName])) {
             // Found valid column
-            return YES;
+            return NO;
         }
     }
     
-    return NO;
+    return YES;
 }
 
 @end

@@ -23,7 +23,7 @@
 
 - (SQCDColumnInfo*) primaryColumn;
 
-- (BOOL) shouldMigrate;
+- (BOOL) isManyToMany;
 
 #ifdef __MAC_OS_X_VERSION_MIN_REQUIRED
 -(NSXMLElement*) xmlRepresentation;

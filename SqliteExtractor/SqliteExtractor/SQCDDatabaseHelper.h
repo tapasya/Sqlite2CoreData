@@ -19,4 +19,10 @@
 
 +(NSMutableDictionary*) inverseRelationships;
 
+//+(NSMutableDictionary*) manyToManyRelationships;
+
++(SQCDForeignKeyInfo*) manyToManyRelationFromTable:(NSString*) fromTableName
+                                           toTable:(NSString*) toTableName;
+
+
 @end

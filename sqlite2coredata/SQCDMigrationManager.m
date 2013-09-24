@@ -10,6 +10,7 @@
 #import "FMDatabase.h"
 #import "SQCDCoreDataManager.h"
 #import "SqliteExtractor.h"
+#import "FMDatabaseAdditions.h"
 
 @implementation SQCDMigrationManager
 
@@ -48,7 +49,7 @@
     for (SQCDTableInfo* tableInfo in [tablesDict allValues]) {
         NSString* tableName =  tableInfo.sqliteName;
         
-        if (![tableName isEqualToString:@"sqlite_sequence"] && [tableInfo shouldMigrate]){
+        if (![tableName isEqualToString:@"sqlite_sequence"] && ![tableInfo isManyToMany]){
             
             NSLog(@"***************  Started migration for table %@  ****************", tableInfo.sqliteName);
             
@@ -56,7 +57,8 @@
             while([results next]) {
                 NSManagedObject *entity =  [SQCDMigrationManager createEntityFromResultSet:results
                                                                             withTableInfo:tableInfo
-                                                                   inManagedObjectContext:moc];
+                                                                   inManagedObjectContext:moc
+                                                                    shouldCreateManyToMany:YES];
                 [moc save:&error];
                 if ( nil != error){
                     NSLog(@"Error while saving %@, %@", entity.entity.name, [error localizedDescription]);
@@ -100,7 +102,9 @@
 +(NSManagedObject*) createEntityFromResultSet:(FMResultSet*) results
                                 withTableInfo:(SQCDTableInfo*) tableInfo
                        inManagedObjectContext:(NSManagedObjectContext*) moc
+                       shouldCreateManyToMany:(BOOL) createM2M
 {
+    
     NSString* entityName = [tableInfo representedClassName];
     
     NSString *primaryProperty = [[tableInfo primaryColumn] nameForProperty];
@@ -146,9 +150,79 @@
                                   inManagedObjectContext:moc
                                                tableInfo:tableInfo
                                                resultSet:results];
+        
+        if (createM2M) {
+            
+            [SQCDMigrationManager createManyToManyFromEntity:entity
+                                           withTableInfo:tableInfo
+                                  inManagedObjectContext:moc];
+        }
+        
     }
     
     return entity;
+}
+
++ (void) createManyToManyFromEntity:(NSManagedObject*) entity
+                         withTableInfo:(SQCDTableInfo*) tableInfo
+                inManagedObjectContext:(NSManagedObjectContext*) moc
+{
+    FMDatabase* database = [SQCDMigrationManager openDatabase];
+
+    NSString *primaryProperty = [[tableInfo primaryColumn] nameForProperty];
+
+    NSDictionary *tablesDict = [SQCDMigrationManager tableDictionary];
+    
+    NSDictionary* inverseDict = [SQCDDatabaseHelper inverseRelationships];
+    
+    NSArray* inverseForTable = [inverseDict objectForKey:tableInfo.sqliteName];
+    
+    for (SQCDForeignKeyInfo* inverseInfo in inverseForTable) {
+        SQCDTableInfo* inverseSourceTableInfo = [tablesDict objectForKey:inverseInfo.toSqliteTableName];
+        if ([inverseSourceTableInfo isManyToMany]) {
+            // TODO migrate many to many
+            SQCDForeignKeyInfo* m2mInfo = [SQCDDatabaseHelper manyToManyRelationFromTable:tableInfo.sqliteName
+                                                                                  toTable:inverseSourceTableInfo.sqliteName];
+            // Fetch results from db and create entities
+            int fromColunmValue = [[entity valueForKey:primaryProperty] intValue];
+            
+            FMResultSet *resultSet = [database executeQuery:[NSString stringWithFormat:@"select * from %@ where %@=%d", inverseSourceTableInfo.sqliteName, inverseInfo.toSqliteColumnName, fromColunmValue]];
+            
+            NSUInteger count = [database intForQuery:[NSString stringWithFormat:@"select count(%@) from %@ where %@=%d",inverseInfo.toSqliteColumnName,inverseSourceTableInfo.sqliteName, inverseInfo.toSqliteColumnName, fromColunmValue]];
+            
+            NSMutableArray* relationEntities = [NSMutableArray array];
+            
+            SQCDTableInfo* toTableInfo = [tablesDict objectForKey:m2mInfo.toSqliteTableName];
+            
+            while([resultSet next]) {
+                
+                int destValue = [resultSet intForColumn:[toTableInfo primaryColumn].sqliteName];
+                FMResultSet *destResults = [database executeQuery:[NSString stringWithFormat:@"select * from %@ where %@=%d ", toTableInfo.sqliteName, [toTableInfo primaryColumn].sqliteName, destValue]];
+                
+                while([destResults next]) {
+                    NSManagedObject *relationEntity =  [SQCDMigrationManager createEntityFromResultSet:destResults
+                                                                                         withTableInfo:toTableInfo
+                                                                                inManagedObjectContext:moc
+                                                                                shouldCreateManyToMany:NO];
+                    [relationEntities addObject:relationEntity];
+                }
+            }
+            
+            @try {
+                NSLog(@"Creating Relation %@ form %@ to %@", m2mInfo.relationName, m2mInfo.fromSqliteTableName, m2mInfo.toSqliteTableName);
+                // Set the reation property upon the fromEntity
+                if (relationEntities.count == count) {
+                    [entity setValue:[NSSet setWithArray:relationEntities] forKey:m2mInfo.relationName];
+                }
+            }
+            @catch (NSException *exception) {
+                NSLog(@"Exception while setting %@ on %@: %@", m2mInfo.relationName, entity.entity.name, [exception debugDescription]);
+            }
+        }
+    }
+    
+    [database close];
+
 }
 
 +(void) createRelationshipForEntity:(NSManagedObject*) fromEntity
@@ -179,7 +253,8 @@
 
                 NSManagedObject *relationEntity =  [SQCDMigrationManager createEntityFromResultSet:results
                                                                                     withTableInfo:toTableInfo
-                                                                           inManagedObjectContext:moc];
+                                                                           inManagedObjectContext:moc
+                                                                            shouldCreateManyToMany:YES];
                 [relationEntities addObject:relationEntity];
             }
             

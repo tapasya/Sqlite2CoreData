@@ -42,9 +42,13 @@
     }
     
     for (SQCDTableInfo *tableInfo in [tableInfos allValues]) {
-        NSLog(@"Generating xml for table '%@'",tableInfo.sqliteName);
-        NSXMLElement* tableEntity = [tableInfo xmlRepresentation];
-        [root addChild:tableEntity];
+        if ([tableInfo isManyToMany]) {
+            NSLog(@"Ignoring xml for table '%@'",tableInfo.sqliteName);
+        }else {
+            NSLog(@"Generating xml for table '%@'",tableInfo.sqliteName);
+            NSXMLElement* tableEntity = [tableInfo xmlRepresentation];
+            [root addChild:tableEntity];
+        }
     }
     
     // NSLog(@"XML Document\n%@", xmlDoc);
