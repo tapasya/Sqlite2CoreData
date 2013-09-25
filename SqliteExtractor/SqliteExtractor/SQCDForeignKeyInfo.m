@@ -36,10 +36,9 @@
     [childAttr addAttribute:[NSXMLNode attributeWithName:@"inverseEntity" stringValue:[self.toSqliteTableName capitalizedString]]];
     
     [childAttr addAttribute:[NSXMLNode attributeWithName:@"toMany" stringValue:(self.toMany ? @"YES":@"NO")]];
-    [childAttr addAttribute:[NSXMLNode attributeWithName:@"deletionRule" stringValue:@"Nullify"]];
+    [childAttr addAttribute:[NSXMLNode attributeWithName:@"deletionRule" stringValue:self.xcOnDeleteAction]];
     [childAttr addAttribute:[NSXMLNode attributeWithName:@"syncable" stringValue:@"YES"]];
     
-    // TODO should set based on optional parameter
     if (self.isOptional) {
         [childAttr addAttribute:[NSXMLNode attributeWithName:@"minCount" stringValue:@"0"]];
     } else{
@@ -50,8 +49,7 @@
         [childAttr addAttribute:[NSXMLNode attributeWithName:@"maxCount" stringValue:@"1"]];
     }
     
-    //TODO should handle 
-    [childAttr addAttribute:[NSXMLNode attributeWithName:@"optional" stringValue:self.isInverse || self.isOptional ? @"YES": @"NO"]];
+    [childAttr addAttribute:[NSXMLNode attributeWithName:@"optional" stringValue:self.isOptional ? @"YES": @"NO"]];
     
     return childAttr;
 }

@@ -8,6 +8,11 @@
 
 #import <Foundation/Foundation.h>
 
+#define XCNULLIFY       @"Nullify"
+#define XCNOACTION      @"No Action"
+#define XCCASCADE       @"Cascade"
+#define XCDENY          @"Deny"
+
 @interface SQCDForeignKeyInfo : NSObject
 
 @property (nonatomic, strong) NSString* fromSqliteTableName;
@@ -19,7 +24,8 @@
 @property (nonatomic, assign) BOOL toMany;
 @property (nonatomic, assign) BOOL isInverse;
 @property (nonatomic, assign) BOOL isOptional;
-
+@property (nonatomic, strong) NSString* sqliteOnDeleteAction;
+@property (nonatomic, strong) NSString* xcOnDeleteAction;
 
 #ifdef __MAC_OS_X_VERSION_MIN_REQUIRED
 -(NSXMLElement*) xmlRepresentation;

@@ -44,7 +44,7 @@
                 
                 tableInfo.columns = [SQCDDatabaseHelper allColumnsInTableNamed:tableInfo.sqliteName dbPath:dbPath];
                 
-                tableInfo.foreignKeys = [SQCDDatabaseHelper allForeignKeysInTableNamed:tableInfo.sqliteName inDatabase:_db];
+                tableInfo.foreignKeys = [SQCDDatabaseHelper allForeignKeysInTable:tableInfo inDatabase:_db];
                 
 //                // Determine relationship cardinality
 //                for (SQCDForeignKeyInfo* foreignKeyInfo in [tableInfo.foreignKeys allValues]) {
@@ -101,11 +101,11 @@
 
 }
 
-+ (NSDictionary*) allForeignKeysInTableNamed:(NSString*)tableName inDatabase:(sqlite3*) db
++ (NSDictionary*) allForeignKeysInTable:(SQCDTableInfo*)tableInfo inDatabase:(sqlite3*) db
 {
-    NSArray* uniqColumns = [SQCDDatabaseHelper allUniqueColumnsInTableNamed:tableName inDatabase:db];
+    NSArray* uniqColumns = [SQCDDatabaseHelper allUniqueColumnsInTableNamed:tableInfo.sqliteName inDatabase:db];
     sqlite3_stmt* statement;
-    NSString *query = [[NSString alloc] initWithFormat:@"pragma foreign_key_list(%@)", tableName];
+    NSString *query = [[NSString alloc] initWithFormat:@"pragma foreign_key_list(%@)", tableInfo.sqliteName];
     int retVal = sqlite3_prepare_v2(db,
                                     [query UTF8String],
                                     -1,
@@ -124,14 +124,21 @@
 
             NSString *toColName = [NSString stringWithCString:(const char *)sqlite3_column_text(statement, 4)
                                                        encoding:NSUTF8StringEncoding];
+            NSString *onDeleteAction = [NSString stringWithCString:(const char *)sqlite3_column_text(statement, 6)
+                                                          encoding:NSUTF8StringEncoding];
 
             SQCDForeignKeyInfo* fkInfo = [SQCDForeignKeyInfo new];
-            fkInfo.fromSqliteTableName = tableName;
+            fkInfo.fromSqliteTableName = tableInfo.sqliteName;
             fkInfo.toSqliteTableName = toTableName;
             fkInfo.fromSqliteColumnName = fromColName;
             fkInfo.toSqliteColumnName = toColName;
             fkInfo.toMany = NO;
             fkInfo.relationName = [[toTableName underscore] camelizeWithLowerFirstLetter];
+            fkInfo.sqliteOnDeleteAction = nil;
+            fkInfo.xcOnDeleteAction = XCNULLIFY;
+            // if foreign-key column allows null, then the relationship is marked optional
+            BOOL fKeyColAllowsNull = [[tableInfo.columns objectForKey:fromColName] isNonNull]==NO;
+            fkInfo.isOptional = fKeyColAllowsNull;
             
             // Build inverse relationship object
             SQCDForeignKeyInfo* invFKInfo = [SQCDForeignKeyInfo new];
@@ -148,6 +155,24 @@
             fkInfo.invRelationName = invFKInfo.relationName;
             invFKInfo.invRelationName = fkInfo.relationName;
             invFKInfo.isInverse = YES;
+            // set the ON DELETE actions for inverse relationship
+            invFKInfo.sqliteOnDeleteAction = onDeleteAction;
+            NSString* capitalizedAction = [onDeleteAction capitalizedString];
+            if ([@[@"SET NULL",@"SET DEFAULT"] containsObject:capitalizedAction]) {
+                invFKInfo.xcOnDeleteAction = XCNULLIFY;
+            }else if ([capitalizedAction isEqualToString:@"RESTRICT"]){
+                invFKInfo.xcOnDeleteAction = XCDENY;
+            }else if ([capitalizedAction isEqualToString:@"CASCADE"]){
+                invFKInfo.xcOnDeleteAction = XCCASCADE;
+            }else if ([capitalizedAction isEqualToString:@"NO ACTION"]){
+                invFKInfo.xcOnDeleteAction = (fkInfo.isOptional ? XCNULLIFY : XCDENY);
+            }else{
+                NSLog(@"Using '%@' as delete rule for unknown sqlite ON DELETE action '%@'",XCNOACTION, capitalizedAction);
+                invFKInfo.xcOnDeleteAction = XCNOACTION;
+            }
+
+            // inverse relationships are always optional
+            invFKInfo.isOptional = YES;
             
             [foreignKeyInfos setValue:fkInfo forKey:fkInfo.fromSqliteColumnName];
             [SQCDDatabaseHelper addInverseRelation:invFKInfo];
