@@ -43,6 +43,7 @@
     [map setValue:XCINT16 forKey:@"TINYINT"];
     [map setValue:XCINT16 forKey:@"SMALLINT"];
     [map setValue:XCINT32 forKey:@"MEDIUMINT"];
+    [map setValue:XCINT64 forKey:@"NUMBER"];
     [map setValue:XCINT64 forKey:@"BIGINT"];
     [map setValue:XCINT64 forKey:@"UNSIGNED BIG INT"];
     [map setValue:XCINT16 forKey:@"INT2"];
@@ -50,11 +51,13 @@
     
     //Text
     [map setValue:XCSTRING forKey:@"CHARACTER"];
+    [map setValue:XCSTRING forKey:@"CHAR"];
     [map setValue:XCSTRING forKey:@"VARCHAR"];
     [map setValue:XCSTRING forKey:@"VARYING CHARACTER"];
     [map setValue:XCSTRING forKey:@"NCHAR"];
     [map setValue:XCSTRING forKey:@"NATIVE CHARACTER"];
     [map setValue:XCSTRING forKey:@"NVARCHAR"];
+    [map setValue:XCSTRING forKey:@"NVARCHAR2"];
     [map setValue:XCSTRING forKey:@"TEXT"];
     [map setValue:XCSTRING forKey:@"CLOB"];
     [map setValue:XCSTRING forKey:@"STRING"];
